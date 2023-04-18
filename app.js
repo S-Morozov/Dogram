@@ -1,72 +1,35 @@
+'use strict';
 const express = require('express');
-const mysql = require('mysql');
-
-// Create a connection to the MySQL database
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'dog_social_network'
-});
-
-// Connect to the database
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to the MySQL database');
-});
-
+var cors = require('cors');
+const passport = require('passport');
+const authRoute = require('./routes/authRoute');
+const catRouter = require('./routes/dogRoute.js');
+const userRouter = require('./routes/userRoute.js');
+require('./utils/passport');
 const app = express();
+const port = 3000;
+
+// Log middleware
+app.use((req, res, next) => {
+    console.log(Date.now() + ': request: ' + req.method + ' ' + req.path);
+    next();
+});
+// Serve example-ui
+app.use(express.static('example-ui'));
+// Serve uploaded image files
+app.use('/uploads', express.static('uploads'));
+// Add 'Access-Control-Allow-Origin: *' header to all
+// responses using cors middleware
+app.use(cors());
+// middleware for parsing request body
 app.use(express.json());
-
-// Get all dogs
-app.get('/dogs', (req, res) => {
-    connection.query('SELECT * FROM dogs', (err, results) => {
-        if (err) throw err;
-        res.json(results);
-    });
-});
-
-// Get a specific dog
-app.get('/dogs/:id', (req, res) => {
-    const id = req.params.id;
-    connection.query('SELECT * FROM dogs WHERE id = ?', [id], (err, results) => {
-        if (err) throw err;
-        res.json(results[0]);
-    });
-});
-
-// Create a new dog
-app.post('/dogs', (req, res) => {
-    const { name, breed, age } = req.body;
-    connection.query('INSERT INTO dogs (name, breed, age) VALUES (?, ?, ?)', [name, breed, age], (err, result) => {
-        if (err) throw err;
-        res.json({ id: result.insertId, name, breed, age });
-    });
-});
-
-// Update a dog
-app.put('/dogs/:id', (req, res) => {
-    const id = req.params.id;
-    const { name, breed, age } = req.body;
-    connection.query('UPDATE dogs SET name = ?, breed = ?, age = ? WHERE id = ?', [name, breed, age, id], (err, result) => {
-        if (err) throw err;
-        res.json({ id, name, breed, age });
-    });
-});
-
-// Delete a dog
-app.delete('/dogs/:id', (req, res) => {
-    const id = req.params.id;
-    connection.query('DELETE FROM dogs WHERE id = ?', [id], (err, result) => {
-        if (err) throw err;
-        res.json({ message: `Dog with id ${id} deleted` });
-    });
-});
-
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
-});
-
-
-
-
+app.use(express.urlencoded({ extended: true }));
+app.use("/", express.static("example-ui"));
+app.use("/uploads/", express.static("uploads"));
+app.use('/thumbnails', express.static('thumbnails'));
+app.use(cors());
+app.use(passport.initialize());
+app.use('/auth', authRoute);
+app.use('/dog', passport.authenticate('jwt', { session: false }), catRouter);
+app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
