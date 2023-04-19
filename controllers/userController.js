@@ -4,6 +4,16 @@ const { validationResult } = require('express-validator');
 // userController
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
+
+const getUser = async (req, res) => {
+  try {
+    const user = await userModel.getUser(req.params.id);
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 const getUserList = async (req, res) => {
   try {
     const users = await userModel.getAllUsers();
@@ -15,18 +25,21 @@ const getUserList = async (req, res) => {
   }
 };
 //Pitää muokkaa
-const postUser = async (req, res) => {
+const user_create_post = async (req, res) => {
   console.log('Creating a new user: ', req.body);
   const salt = await bcryptjs.genSalt(10);
-  const password = await bcryptjs.hash(req.body.passwd, salt);
+  const password = await bcryptjs.hash(req.body.password, salt);
   const newUser = {
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
-    passwd: password,
-    role: 1,
+    password: password,
+    profile_image: null,
+    bio: null,
+    location: req.body.location,
+    website: null,
+    created_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
   };
   const errors = validationResult(req);
-  console.log('validation errors', errors);
   if (errors.isEmpty()) {
     try {
       const result = await userModel.addUser(newUser);
@@ -35,32 +48,16 @@ const postUser = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   } else {
+    console.log('validation errors', errors);
     res.status(400).json({
       message: 'user creation failed',
       errors: errors.array(),
     });
   }
 };
-const getUser = async (req, res) => {
-  try {
-    const user = await userModel.getUser(req.params.id);
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-const user_create_post = async (req, res) => {
-  try {
-    userModel.addUser(req.body);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-};
 const checkToken = (req, res) => {
   res.json({ user: req.user });
 };
 module.exports = {
-  getUserList, getUser, postUser, user_create_post, checkToken
+  getUserList, getUser, user_create_post, checkToken
 };

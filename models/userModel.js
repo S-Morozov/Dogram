@@ -20,12 +20,17 @@ const getUser = async (id) => {
   }
 };
 const addUser = async (user) => {
+  console.log("Käyttäjä on : ",user);
   try {
-    const [result] = await pool.query('INSERT INTO wop_user (name, email, password, role) VALUES (?, ?, ?, ?)', [
-      user.name,
+    const [result] = await pool.query('INSERT INTO users (username, email, password, profile_image, bio, location, website, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
+      user.username,
       user.email,
-      user.passwd,
-      user.role
+      user.password,
+      user.profile_image || null,
+      user.bio || null,
+      user.location,
+      user.website || null,
+      new Date().toISOString().slice(0, 19).replace('T', ' ') // to get the current date and time in the correct format for the MySQL datetime type
     ]);
     return result;
   } catch (e) {
@@ -33,6 +38,7 @@ const addUser = async (user) => {
     return;
   }
 };
+
 
 const getUserLogin = async (params) => {
   try {
