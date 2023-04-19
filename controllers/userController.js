@@ -14,6 +14,7 @@ const getUserList = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+//Pitää muokkaa
 const postUser = async (req, res) => {
   console.log('Creating a new user: ', req.body);
   const salt = await bcryptjs.genSalt(10);
@@ -61,5 +62,5 @@ const checkToken = (req, res) => {
   res.json({ user: req.user });
 };
 module.exports = {
-  getUserList, getUser, postUser, user_create_post, checkToken, postUser
+  getUserList, getUser, postUser, user_create_post, checkToken
 };
