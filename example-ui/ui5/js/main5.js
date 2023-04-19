@@ -38,32 +38,32 @@ const startApp = (logged) => {
   }
 };
 
-// create cat cards
+// create dog cards
 const createCatCards = (cats) => {
   // clear ul
   ul.innerHTML = '';
-  cats.forEach((cat) => {
+  cats.forEach((dog) => {
     // create li with DOM methods
     const img = document.createElement('img');
-    if (cat.filename.includes("placekitten.com")) {
-      img.src = cat.filename;
+    if (dog.filename.includes("placekitten.com")) {
+      img.src = dog.filename;
     } else {
-      img.src = url + '/thumbnails/' + cat.filename;
-    } if (cat.filename.includes("placekitten.com")) {
-      img.src = cat.filename;
+      img.src = url + '/thumbnails/' + dog.filename;
+    } if (dog.filename.includes("placekitten.com")) {
+      img.src = dog.filename;
     } else {
-      img.src = url + '/thumbnails/' + cat.filename;
+      img.src = url + '/thumbnails/' + dog.filename;
     }
-    img.alt = cat.name;
+    img.alt = dog.name;
     img.classList.add('resp');
 
     // open large image when clicking image
     img.addEventListener('click', () => {
-      modalImage.src = url + '/' + cat.filename;
-      imageModal.alt = cat.name;
+      modalImage.src = url + '/' + dog.filename;
+      imageModal.alt = dog.name;
       imageModal.classList.toggle('hide');
       try {
-        const coords = JSON.parse(cat.coords);
+        const coords = JSON.parse(dog.coords);
         // console.log(coords);
         addMarker(coords);
       } catch (e) { }
@@ -72,24 +72,24 @@ const createCatCards = (cats) => {
     const figure = document.createElement('figure').appendChild(img);
 
     const h2 = document.createElement('h2');
-    h2.innerHTML = cat.name;
+    h2.innerHTML = dog.name;
 
     const p1 = document.createElement('p');
     p1.innerHTML = `Birthdate: ${dt
-      .fromISO(cat.birthdate)
+      .fromISO(dog.birthdate)
       .setLocale('fi')
       .toLocaleString()}`;
     const p1b = document.createElement('p');
     p1b.innerHTML = `Age: ${dt
       .now()
-      .diff(dt.fromISO(cat.birthdate), ['year'])
+      .diff(dt.fromISO(dog.birthdate), ['year'])
       .toFormat('y')}`;
 
     const p2 = document.createElement('p');
-    p2.innerHTML = `Weight: ${cat.weight}kg`;
+    p2.innerHTML = `Weight: ${dog.weight}kg`;
 
     const p3 = document.createElement('p');
-    p3.innerHTML = `Owner: ${cat.ownername}`;
+    p3.innerHTML = `Owner: ${dog.ownername}`;
 
     const li = document.createElement('li');
     li.classList.add('light-border');
@@ -101,20 +101,20 @@ const createCatCards = (cats) => {
     li.appendChild(p2);
     li.appendChild(p3);
     ul.appendChild(li);
-    if (user.role === 0 || user.user_id === cat.owner) {
+    if (user.role === 0 || user.user_id === dog.owner) {
       // add modify button
       const modButton = document.createElement('button');
       modButton.innerHTML = 'Modify';
       modButton.addEventListener('click', () => {
         const inputs = modForm.querySelectorAll('input');
-        inputs[0].value = cat.name;
-        inputs[1].value = cat.birthdate;
-        inputs[2].value = cat.weight;
-        modForm.action = `${url}/cat/${cat.cat_id}`;
-        if (user.role === 0) modForm.querySelector('select').value = cat.owner;
+        inputs[0].value = dog.name;
+        inputs[1].value = dog.birthdate;
+        inputs[2].value = dog.weight;
+        modForm.action = `${url}/dog/${dog.cat_id}`;
+        if (user.role === 0) modForm.querySelector('select').value = dog.owner;
       });
 
-      // delete selected cat
+      // delete selected dog
       const delButton = document.createElement('button');
       delButton.innerHTML = 'Delete';
       delButton.addEventListener('click', async () => {
@@ -126,7 +126,7 @@ const createCatCards = (cats) => {
         };
         try {
           const response = await fetch(
-            url + '/cat/' + cat.cat_id,
+            url + '/dog/' + dog.cat_id,
             fetchOptions
           );
           const json = await response.json();
@@ -158,7 +158,7 @@ const getCat = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/cat', options);
+    const response = await fetch(url + '/dog', options);
     const cats = await response.json();
     createCatCards(cats);
   } catch (e) {
@@ -196,7 +196,7 @@ const getUsers = async () => {
   }
 };
 
-// submit add cat form
+// submit add dog form
 addForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
@@ -207,7 +207,7 @@ addForm.addEventListener('submit', async (evt) => {
     },
     body: fd,
   };
-  const response = await fetch(url + '/cat', fetchOptions);
+  const response = await fetch(url + '/dog', fetchOptions);
   const json = await response.json();
   console.log('add response', json);
   getCat();

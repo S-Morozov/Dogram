@@ -27,11 +27,11 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 
 // Lisää kissan
 router.post('/', passport.authenticate('jwt', { session: false }),
-  upload.single('cat'),
+  upload.single('dog'),
   body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
   body('birthdate').isISO8601().withMessage('Invalid birthdate'),
   body('weight').isNumeric().withMessage('Weight must be a number'),
-  body('cat').custom((value, { req }) => {
+  body('dog').custom((value, { req }) => {
     if (!req.file) {
       throw new Error('File is required');
     } else if (!['image/png', 'image/jpeg', 'image/gif'].includes(req.file.mimetype)) {
