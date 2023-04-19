@@ -20,16 +20,13 @@ const getUser = async (id) => {
   }
 };
 const addUser = async (user) => {
+  console.log("Käyttäjä on : ", user);
   try {
     const [result] = await pool.query('INSERT INTO users (username, email, password, profile_image, bio, location, website, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
       user.username,
       user.email,
-      user.password,
-      user.profile_image ?? "default_profile.png",
-      user.bio || null,
-      user.location,
-      user.website || null,
-      new Date().toISOString().slice(0, 19).replace('T', ' ')
+      user.passwd,
+      user.role
     ]);
     return result;
   } catch (e) {

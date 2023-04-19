@@ -4,18 +4,6 @@ const { makeThumbnail } = require('../utils/image');
 // userController
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
-
-//Hakee käyttäjän
-const getUser = async (req, res) => {
-  try {
-    const user = await userModel.getUser(req.params.id);
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-//Hakee kaikki käyttäjät
 const getUserList = async (req, res) => {
   console.log('Creating User', req.body, req.file);
   try {
@@ -27,26 +15,16 @@ const getUserList = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-//Luo käyttäjän
-const user_create_post = async (req, res) => {
-  const { username, email, password, bio } = req.body;
-  const { filename } = req.file || {};
-
+//Pitää muokkaa
+const postUser = async (req, res) => {
+  console.log('Creating a new user: ', req.body);
   const salt = await bcryptjs.genSalt(10);
-  const hashedPassword = await bcryptjs.hash(password, salt);
-  if (req.file) {
-    await makeThumbnail(req.file.path, req.file.filename);
-  }
-
+  const password = await bcryptjs.hash(req.body.passwd, salt);
   const newUser = {
-    username,
-    email,
-    password: hashedPassword,
-    profile_image: filename ?? null,
-    bio,
-    location: req.body.location ?? null,
-    website: req.body.website ?? null,
-    created_at: `${new Date().toISOString().split('T')[0]} ${new Date().toLocaleTimeString()}`,
+    name: req.body.name,
+    email: req.body.email,
+    passwd: password,
+    role: 1,
   };
 
   const errors = validationResult(req);
@@ -55,7 +33,7 @@ const user_create_post = async (req, res) => {
       //Mitä jos admin vois laittaa uuden accountin suoraan admin?
       const result = await userModel.addUser(newUser);
       res.status(201).json({ message: 'user created', userId: result });
-      
+
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -67,20 +45,26 @@ const user_create_post = async (req, res) => {
     });
   }
 };
-//Hakee käyttäjän ID:n
-const getUserId = async (req, res) => {
-  const { username, email } = req.body;
+const getUser = async (req, res) => {
   try {
-    const user_id = await userModel.checkUserId(username, email);
-    res.status(200).json({ user_id });
+    const user = await userModel.getUser(req.params.id);
+    res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to get user ID' });
+    res.status(500).send('Internal Server Error');
+  }
+};
+const user_create_post = async (req, res) => {
+  try {
+    userModel.addUser(req.body);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 };
 const checkToken = (req, res) => {
   res.json({ user: req.user });
 };
 module.exports = {
-  getUserList, getUser, user_create_post, checkToken, getUserId
+  getUserList, getUser, postUser, user_create_post, checkToken
 };
