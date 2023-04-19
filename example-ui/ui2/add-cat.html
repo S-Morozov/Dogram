@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>Example</title>
+    <link href="./css/ui2.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="front.html">Frontpage</a></li>
+                <li><a href="add-user.html">Add user</a></li>
+                <li><a href="add-cat.html">Add cat</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="forms">
+            <div class="form-wrapper">
+                <h3>Add cat</h3>
+                <form action="http://localhost:3000/cat" method="post" class="light-border" enctype="multipart/form-data" id="addCatForm">
+                    <input class="light-border" type="text" name="name" placeholder="Name" required>
+                    <input class="light-border" type="date" name="birthdate" placeholder="Birthdate: YYYY-MM-DD" required>
+                    <input class="light-border" type="number" step="0.1" name="weight" placeholder="Weight" required>
+                    <select class="light-border add-owner" name="owner" required>
+                        <option value="">Select owner</option>
+                    </select>
+                    <input class="light-border" type="file" name="cat" accept="image/jpg,gif,png"
+                        placeholder="Choose file" required>
+                    <button class="light-border" type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="./js/serialize.js"></script>
+    <script src="./js/add-cat.js"></script>
+</body>
+
+</html>
