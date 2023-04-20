@@ -20,7 +20,6 @@ const getUser = async (id) => {
   }
 };
 const addUser = async (user) => {
-  console.log("Käyttäjä on : ",user);
   try {
     const [result] = await pool.query('INSERT INTO users (username, email, password, profile_image, bio, location, website, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
       user.username,

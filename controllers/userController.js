@@ -42,8 +42,10 @@ const user_create_post = async (req, res) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
+      //Mitä jos admin vois laittaa uuden accountin suoraan admin?
       const result = await userModel.addUser(newUser);
       res.status(201).json({ message: 'user created', userId: result });
+      
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
