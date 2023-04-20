@@ -33,7 +33,6 @@ const postUser = async (req, res) => {
       //Mitä jos admin vois laittaa uuden accountin suoraan admin?
       const result = await userModel.addUser(newUser);
       res.status(201).json({ message: 'user created', userId: result });
-
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
