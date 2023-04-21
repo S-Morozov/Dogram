@@ -20,9 +20,14 @@ loginForm.addEventListener('submit', async (evt) => {
     if (!json.user) {
       alert(json.message);
     } else {
+      const user = {
+        user_id: json.user.user_id,
+        username: json.user.username,
+        email: json.user.email
+      };
       // save token
       sessionStorage.setItem('token', json.token);
-      sessionStorage.setItem('user', JSON.stringify(json.user));
+      sessionStorage.setItem('user', JSON.stringify(user));  
       location.href = 'front.html';
     }
   });

@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const passport = require('passport');
-// catRoute
+// dogRoute
 const router = express.Router();
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
@@ -17,13 +17,13 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const controller = require('../controllers/catController');
+const controller = require('../controllers/dogController');
 
 //Hakee kaikki kissat
-router.get('/', passport.authenticate('jwt', { session: false }), controller.getCatList);
+router.get('/', passport.authenticate('jwt', { session: false }), controller.getdogList);
 
 //Hakee tietyn kissan
-router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getCat);
+router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getdog);
 
 // Lisää kissan
 router.post('/', passport.authenticate('jwt', { session: false }),
@@ -45,7 +45,7 @@ router.post('/', passport.authenticate('jwt', { session: false }),
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    controller.cat_create_post(req, res);
+    controller.dog_create_post(req, res);
   }
 );
 
@@ -59,8 +59,8 @@ router.put('/:id', body('name').isAlpha().isLength({ min: 3 }).withMessage('Name
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    controller.cat_update_put(req, res);
+    controller.dog_update_put(req, res);
   });
 // Poista kissa
-router.delete('/:id', controller.cat_delete);
+router.delete('/:id', controller.dog_delete);
 module.exports = router;

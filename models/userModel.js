@@ -3,7 +3,7 @@ const pool = require('../database/db');
 
 const getAllUsers = async () => {
   try {
-    const [users] = await pool.query(`SELECT user_id, name, email, role FROM wop_user`);
+    const [users] = await pool.query(`SELECT user_id, name, email FROM users`);
     return users;
   } catch (e) {
     console.error("error", e.message);
@@ -12,8 +12,8 @@ const getAllUsers = async () => {
 
 const getUser = async (id) => {
   try {
-    const [user] = await pool.query('SELECT user_id, name, email, role FROM wop_user WHERE user_id = ?', [id]);
-    return user;
+    const [user] = await pool.query('SELECT username, email FROM users WHERE user_id = ?', [id]);
+    return user[0];
   } catch (e) {
     console.error("error", e.message);
     return;
@@ -26,11 +26,11 @@ const addUser = async (user) => {
       user.username,
       user.email,
       user.password,
-      user.profile_image || null,
+      user.profile_image ?? "uploads\default_profile.png",
       user.bio || null,
-      user.location,
+      user.location,  
       user.website || null,
-      new Date().toISOString().slice(0, 19).replace('T', ' ') // to get the current date and time in the correct format for the MySQL datetime type
+      new Date().toISOString().slice(0, 19).replace('T', ' ')
     ]);
     return result;
   } catch (e) {

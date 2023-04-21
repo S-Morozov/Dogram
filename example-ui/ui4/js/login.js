@@ -7,7 +7,6 @@ const addUserForm = document.querySelector('#add-user-form');
 
 // login
 loginForm.addEventListener('submit', async (evt) => {
-  console.log("Test");
   evt.preventDefault();
   const data = serializeJson(loginForm);
   const fetchOptions = {
