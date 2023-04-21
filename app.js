@@ -6,8 +6,19 @@ const authRoute = require('./routes/authRoute');
 const dogRouter = require('./routes/dogRoute.js');
 const userRouter = require('./routes/userRoute.js');
 require('./utils/passport');
+const path = require("path");
 const app = express();
 const port = 3000;
+
+
+
+// Load main page when node.js start
+
+app.use("/", express.static("css"));
+app.use('/images', express.static('images'));
+app.get('/', (req, res) => {
+    res.sendFile (__dirname + '/index.html');
+});
 
 // Log middleware
 app.use((req, res, next) => {
@@ -33,3 +44,4 @@ app.use('/auth', authRoute);
 app.use('/dog', passport.authenticate('jwt', { session: false }), dogRouter);
 app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
