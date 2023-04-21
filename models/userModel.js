@@ -44,7 +44,7 @@ const getUserLogin = async (params) => {
   try {
     //console.log('getUserLogin params:', params);
     const [rows] = await pool.execute(
-      'SELECT * FROM wop_user WHERE email = ?;',
+      'SELECT * FROM users WHERE username = ?;',
       [params]);
     //console.log('getUserLogin rows:', rows);
     return rows;
