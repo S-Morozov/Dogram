@@ -25,21 +25,23 @@ const getDog = async (id) => {
   }
 };
 
-
-const addDog = async (dog, userId) => {
+const addDog = async (dog) => {
   console.log("Adding dog: ", dog);
   try {
-    const [result] = await pool.query('INSERT INTO dogs (name, weight, owner, filename, birthdate, coords) VALUES (?, ?, ?, ?, ?, ?);', [
+    const [result] = await pool.query('INSERT INTO dogs (name, breed, age, gender, color, bio, profile_image, owner_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [
       dog.name,
-      dog.weight,
-      userId,
+      dog.breed,
+      dog.age,
+      dog.gender,
+      dog.color,
+      dog.bio,
       dog.filename,
-      dog.birthdate,
-      dog.coords ?? "[24.74, 60.24]"
+      dog.owner,
+      new Date().toISOString().slice(0, 19).replace('T', ' '),
     ]);
     return result;
   } catch (e) {
-    console.error("error", dog);
+    console.error("error", e);
     return;
   }
 };
