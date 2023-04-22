@@ -1,6 +1,6 @@
 'use strict';
-const { addListener } = require('../database/db');
 const { validationResult } = require('express-validator');
+const { makeThumbnail } = require('../utils/image');
 // userController
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
@@ -15,6 +15,7 @@ const getUser = async (req, res) => {
   }
 };
 const getUserList = async (req, res) => {
+  console.log('Creating User', req.body, req.file);
   try {
     const users = await userModel.getAllUsers();
     //console.log(users);
@@ -29,16 +30,18 @@ const user_create_post = async (req, res) => {
   console.log('Creating a new user: ', req.body);
   const salt = await bcryptjs.genSalt(10);
   const password = await bcryptjs.hash(req.body.password, salt);
+  await makeThumbnail(req.file.path, req.file.filename);
   const newUser = {
     username: req.body.username,
     email: req.body.email,
     password: password,
-    profile_image: null,
-    bio: null,
-    location: req.body.location,
-    website: null,
+    profile_image: req.file.filename,
+    bio: req.body.bio,
+    location: req.body.location ?? null,
+    website: req.body.website ?? null,
     created_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
   };
+  console.log(newUser);
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
@@ -55,6 +58,9 @@ const user_create_post = async (req, res) => {
     });
   }
 };
+
+
+
 const checkToken = (req, res) => {
   res.json({ user: req.user });
 };

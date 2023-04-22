@@ -3,21 +3,10 @@ const express = require('express');
 const passport = require('passport');
 // dogRoute
 const router = express.Router();
-const multer = require('multer');
-const { body, validationResult } = require('express-validator');
-// piettää kuvalle vanhan nimen
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-    const filename = file.originalname || new Date().toISOString();
-    callback(null, filename);
-  }
-});
-
-const upload = multer({ storage });
 const controller = require('../controllers/dogController');
+const { body, validationResult } = require('express-validator');
+const uploadMiddleware = require('../utils/multer');
+
 
 //Hakee kaikki kissat
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getdogList);
@@ -27,7 +16,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 
 // Lisää kissan
 router.post('/', passport.authenticate('jwt', { session: false }),
-  upload.single('dog'),
+uploadMiddleware.single('dog'),
   body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
   body('birthdate').isISO8601().withMessage('Invalid birthdate'),
   body('weight').isNumeric().withMessage('Weight must be a number'),

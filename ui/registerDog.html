@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="formDiv">
+        <h3>Register</h3>
+        <form class="light-border" id="add-dog-form">
+            <input class="light-border" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
+            <input class="light-border" type="email" name="breed" placeholder="breed">
+            <input class="light-border" type="text" name="age" placeholder="age">
+             <input type="radio" id="html" name="gender" value="Male">
+             <label for="Male">Male</label>
+             <input type="radio" id="css" name="gender" value="Female">
+             <label for="Female">Female</label>
+            <input class="light-border" type="text" name="bio" placeholder="Bio">
+            <input class="light-border" type="file" name="profile_image" accept="image/*" placeholder="Choose file">
+            <button class="light-border" type="submit">Save</button>
+        </form>
+    </div>
+    </div>
+    <script type="module" src="/utils/serialize.js"></script>
+    <script src="js/registerDog.js"></script>
+    <script type="module" src="js/check-login.js"></script>
+</body>
+
+</html>

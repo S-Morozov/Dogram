@@ -38,7 +38,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", express.static("example-ui"));
 app.use("/uploads/", express.static("uploads"));
 app.use('/thumbnails', express.static('thumbnails'));
-app.use(cors());
 app.use(passport.initialize());
 app.use('/auth', authRoute);
 app.use('/dog', passport.authenticate('jwt', { session: false }), dogRouter);

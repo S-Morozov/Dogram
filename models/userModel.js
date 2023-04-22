@@ -26,7 +26,7 @@ const addUser = async (user) => {
       user.username,
       user.email,
       user.password,
-      user.profile_image ?? "uploads\default_profile.png",
+      user.profile_image ?? "default_profile.png",
       user.bio || null,
       user.location,  
       user.website || null,

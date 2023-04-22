@@ -9,19 +9,19 @@
 <body>
     <div class="formDiv">
         <h3>Register</h3>
-        <form class="light-border" id="add-user-form">
+        <form class="light-border" enctype="multipart/form-data" id="add-user-form">
           <input class="light-border" type="text" name="username" pattern=".{3,}" placeholder="Username" required>
-          <input class="light-border" type="email" name="email" placeholder="email">
-          <input class="light-border" type="password" name="password" placeholder="Password">
-          <input class="light-border" type="file" name="profile_image" accept="image/*" placeholder="Choose file">
-          <input class="light-border" type="bio" name="bio" placeholder="Bio">
-          <input class="light-border" type="location" name="location" placeholder="Location">
-          <input class="light-border" type="website" name="website" placeholder="Website">
+          <input class="light-border" type="email" name="email" placeholder="email" required>
+          <input class="light-border" type="password" name="password" placeholder="Password" required>
+          <input class="light-border" type="file" name="file" accept="image/*">
+          <textarea class="light-border" name="bio" placeholder="Bio"></textarea>
+          <input class="light-border" type="text" name="location" placeholder="Location">
+          <input class="light-border" type="text" name="website" placeholder="Website">
           <button class="light-border" type="submit">Save</button>
         </form>
       </div>
     </div>
     <script type="module" src="/utils/serialize.js"></script>
-    <script  src="js/register.js"></script>
+    <script type="module" src="js/register.js"></script>
 </body>
 </html>
