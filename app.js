@@ -43,4 +43,3 @@ app.use('/auth', authRoute);
 app.use('/dog', passport.authenticate('jwt', { session: false }), dogRouter);
 app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-

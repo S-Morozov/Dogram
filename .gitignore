@@ -129,5 +129,6 @@ uploads/*
 thumbnails/*
 # except one (empty) file to have the folder in version control
 !thumbnails/.gitkeep
+!thumbnails/default_profile.png
 # .env (dotenv) is used to store sensitive data such as database username and password. Add .env to .gitignore so that it won't be pushed to GitHub.
 .env

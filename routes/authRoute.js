@@ -13,6 +13,7 @@ router
     .get('/logout', logout)
     .post(
         '/registerDog',
+        uploadMiddleware.single('file'),
         dog_create_post
     )
     .post('/register',uploadMiddleware.single('file'),

@@ -1,7 +1,8 @@
 'use strict';
 const dogModel = require('../models/dogModel');
+const userModel = require('../models/userModel');
 const { validationResult } = require('express-validator');
-const { makeThumbnail, getCoordinates } = require('../utils/image');
+const { makeThumbnail } = require('../utils/image');
 
 const getdogList = async (req, res) => {
     try {
@@ -34,41 +35,39 @@ const getdog = async (req, res) => {
 };
 //Luo kissan
 const dog_create_post = async (req, res) => {
-    console.log('posting a dog', req.body, req.file);
+    console.log('posting a dog', req.body);
+
     if (!req.file) {
-        res.status(400).json({
+        return res.status(400).json({
             status: 400,
-            message: 'Invalid or missing image file'
+            message: 'Invalid or missing image file',
         });
-        return;
     }
+
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-        res.status(400).json({
+        return res.status(400).json({
             status: 400,
             errors: validationErrors.array(),
-            message: 'Invalid post data'
+            message: 'Invalid post data',
         });
-        return;
     }
+    const user_id = await userModel.checkUserId(req.user.username, req.user.email);
+    console.log(user_id);
     const newDog = req.body;
-    const userId = req.user[0].user_id;
     newDog.filename = req.file.filename;
-    newDog.owner = userId;
-    // make thumbnail
+    newDog.owner = user_id;
+
     await makeThumbnail(req.file.path, newDog.filename);
-    // get coordinates
-    if (req.file.mimetype === ".jpeg") {
-        newDog.coords = await getCoordinates(req.file.path);
-        console.log('coords', newDog.coords);
-    }
+
     try {
-        await dogModel.addDog(newDog, userId);
-        res.status(201).json({ message: 'new dog added!' });
+        await dogModel.addDog(newDog);
+        return res.status(201).json({ message: 'new dog added!' });
     } catch (error) {
-        res.status(500).json({ error: 500, message: error.message });
+        return res.status(500).json({ error: 500, message: error.message });
     }
 };
+
 //Päivitä
 const dog_update_put = async (req, res) => {
     const validationErrors = validationResult(req);

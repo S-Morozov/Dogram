@@ -3,7 +3,7 @@ import { url } from '../../utils/url.js';
 const addDogForm = document.querySelector("#add-dog-form");
 addDogForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    const data = serializeJson(addDogForm);
+    const fd = new FormData(addDogForm);
     const fetchOptions = {
         method: 'POST',
         headers: {
@@ -11,12 +11,7 @@ addDogForm.addEventListener('submit', async (evt) => {
         },
         body: fd,
     };
-    const response = await fetch(url + '/auth/registerDog', fetchOptions);
+    const response = await fetch(url + '/dog', fetchOptions);
     const json = await response.json();
-    if (json.error) {
-        alert(json.error.message);
-    } else {
-        alert(json.message);
-        //location.href = 'front.html';
-    }
+    console.log('add response', json);
 });

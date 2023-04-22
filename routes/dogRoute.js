@@ -8,19 +8,18 @@ const { body, validationResult } = require('express-validator');
 const uploadMiddleware = require('../utils/multer');
 
 
-//Hakee kaikki kissat
+//Hakee kaikki koirat
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getdogList);
 
-//Hakee tietyn kissan
+//Hakee tietyn koiran
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getdog);
 
-// Lisää kissan
+// Lisää koiran
 router.post('/', passport.authenticate('jwt', { session: false }),
-uploadMiddleware.single('dog'),
+  uploadMiddleware.single('file'),
   body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
-  body('birthdate').isISO8601().withMessage('Invalid birthdate'),
-  body('weight').isNumeric().withMessage('Weight must be a number'),
-  body('dog').custom((value, { req }) => {
+  body('age').isNumeric().withMessage('Age must be a number'),
+  body('file').custom((value, { req }) => {
     if (!req.file) {
       throw new Error('File is required');
     } else if (!['image/png', 'image/jpeg', 'image/gif'].includes(req.file.mimetype)) {
@@ -38,7 +37,8 @@ uploadMiddleware.single('dog'),
   }
 );
 
-// Muokkaa kissaa
+
+// Muokkaa koiraa
 router.put('/:id', body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
   body('birthdate').isISO8601().withMessage('Invalid birthdate'),
   body('weight').isNumeric().withMessage('Weight must be a number'),
@@ -50,6 +50,6 @@ router.put('/:id', body('name').isAlpha().isLength({ min: 3 }).withMessage('Name
     }
     controller.dog_update_put(req, res);
   });
-// Poista kissa
+// Poista koira
 router.delete('/:id', controller.dog_delete);
 module.exports = router;

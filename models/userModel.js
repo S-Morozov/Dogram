@@ -20,7 +20,7 @@ const getUser = async (id) => {
   }
 };
 const addUser = async (user) => {
-  console.log("Käyttäjä on : ",user);
+  console.log("Käyttäjä on : ", user);
   try {
     const [result] = await pool.query('INSERT INTO users (username, email, password, profile_image, bio, location, website, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
       user.username,
@@ -28,7 +28,7 @@ const addUser = async (user) => {
       user.password,
       user.profile_image ?? "default_profile.png",
       user.bio || null,
-      user.location,  
+      user.location,
       user.website || null,
       new Date().toISOString().slice(0, 19).replace('T', ' ')
     ]);
@@ -52,7 +52,19 @@ const getUserLogin = async (params) => {
     console.log('getUserLogin error:', e.message);
   }
 };
+//Hakee tietyn käyttäjän ID:n
+const checkUserId = async (username, email) => {
+  try {
+    const [[{ user_id }]] = await pool.execute(
+      'SELECT user_id FROM users WHERE username = ? AND email= ?;',
+      [username, email]);
+    return user_id;
+  } catch (error) {
+    console.log('checkUserId error:', error.message);
+  }
+};
+
 
 module.exports = {
-  getUser, getAllUsers, addUser, getUserLogin
+  getUser, getAllUsers, addUser, getUserLogin, checkUserId
 };

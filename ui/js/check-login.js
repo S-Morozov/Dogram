@@ -17,13 +17,13 @@ import {url} from '../../utils/url.js';
     if (!response.ok) {
       location.href = 'login.html';
     } else {
-      const json = await response.json(); // declare and initialize 'json'
+      const json = await response.json();
       const user = {
         user_id: json.user.user_id,
         username: json.user.username,
         email: json.user.email
       };
-      sessionStorage.setItem('user', JSON.stringify(user));  
+      sessionStorage.setItem('user', JSON.stringify(json.user));  
     }
   } catch (e) {
     console.log(e.message);

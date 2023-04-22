@@ -5,6 +5,7 @@ const { makeThumbnail } = require('../utils/image');
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
 
+//Hakee käyttäjän
 const getUser = async (req, res) => {
   try {
     const user = await userModel.getUser(req.params.id);
@@ -14,6 +15,7 @@ const getUser = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+//Hakee kaikki käyttäjät
 const getUserList = async (req, res) => {
   console.log('Creating User', req.body, req.file);
   try {
@@ -25,23 +27,28 @@ const getUserList = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-//Pitää muokkaa
+//Luo käyttäjän
 const user_create_post = async (req, res) => {
-  console.log('Creating a new user: ', req.body);
+  const { username, email, password, bio } = req.body;
+  const { filename } = req.file || {};
+
   const salt = await bcryptjs.genSalt(10);
-  const password = await bcryptjs.hash(req.body.password, salt);
-  await makeThumbnail(req.file.path, req.file.filename);
+  const hashedPassword = await bcryptjs.hash(password, salt);
+  if (req.file) {
+    await makeThumbnail(req.file.path, req.file.filename);
+  }
+
   const newUser = {
-    username: req.body.username,
-    email: req.body.email,
-    password: password,
-    profile_image: req.file.filename,
-    bio: req.body.bio,
+    username,
+    email,
+    password: hashedPassword,
+    profile_image: filename ?? null,
+    bio,
     location: req.body.location ?? null,
     website: req.body.website ?? null,
-    created_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    created_at: `${new Date().toISOString().split('T')[0]} ${new Date().toLocaleTimeString()}`,
   };
-  console.log(newUser);
+
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
@@ -58,7 +65,6 @@ const user_create_post = async (req, res) => {
     });
   }
 };
-
 
 
 const checkToken = (req, res) => {

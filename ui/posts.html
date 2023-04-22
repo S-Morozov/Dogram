@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
     <div class="formDiv">
         <h3>Register</h3>
-        <form class="light-border" id="add-dog-form">
+        <form class="light-border" id="post">
             <input class="light-border" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
             <input class="light-border" type="text" name="breed" placeholder="breed" required>
             <input class="light-border" type="number" name="age" placeholder="age" required>
@@ -25,9 +23,8 @@
             <button class="light-border" type="submit">Save</button>
         </form>
     </div>
-    <script type="module" src="/utils/serialize.js"></script>
-    <script type="module" src="js/registerDog.js"></script>
-    <script type="module" src="js/check-login.js"></script>
 </body>
-
+<script src="/utils/serialize.js"></script>
+<script type="module" src="js/posts.js"></script>
+<script type="module" src="js/check-login.js"></script>
 </html>
