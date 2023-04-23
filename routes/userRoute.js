@@ -9,15 +9,17 @@ const controller = require('../controllers/userController');
 const uploadMiddleware = require('../utils/multer');
 
 
-
 //Hakee kaikki käyttäjät
 router.get('/', controller.getUserList);
-//Tietty käyttäjä
+//Tarkistaa tokenin
 router.get("/token", controller.checkToken);
+//Tietty käyttäjä
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getUser);
+//Tietyn käyttäjän ID
+router.post('/getId', passport.authenticate('jwt', { session: false }), controller.getUserId);
 // POST
 router.post('/',
-uploadMiddleware.single('file'),body('username').isLength({min: 3}).isAlpha,
+  uploadMiddleware.single('file'), body('username').isLength({ min: 3 }).isAlpha,
   body('email').isEmail().withMessage('Email must be valid').normalizeEmail(),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
   (req, res) => {
@@ -40,4 +42,5 @@ router.put('/', (req, res) => {
 router.delete('/', (req, res) => {
   res.send("With this endpoint you can delete users.");
 });
+
 module.exports = router;

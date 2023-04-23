@@ -63,8 +63,6 @@ const checkUserId = async (username, email) => {
     console.log('checkUserId error:', error.message);
   }
 };
-
-
 module.exports = {
   getUser, getAllUsers, addUser, getUserLogin, checkUserId
 };

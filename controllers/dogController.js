@@ -4,6 +4,7 @@ const userModel = require('../models/userModel');
 const { validationResult } = require('express-validator');
 const { makeThumbnail } = require('../utils/image');
 
+//Hakee kaikki koirat
 const getdogList = async (req, res) => {
     try {
         let dogs = await dogModel.getAlldogs();
@@ -12,7 +13,16 @@ const getdogList = async (req, res) => {
         res.status(500).json({ error: 500, message: error.message });
     }
 };
-
+//Hakee yhden omistajan koirat
+const getdogs = async (req, res) => {
+    try {
+        let dogs = await dogModel.getUserDogs(req.params.id);
+        res.json(dogs);
+    } catch (error) {
+        res.status(500).json({ error: 500, message: error.message });
+    }
+};
+//Hakee koiran
 const getdog = async (req, res) => {
     //console.log(req.params);
     // convert id value to number
@@ -33,7 +43,7 @@ const getdog = async (req, res) => {
         res.status(404).json({ message: 'dog not found.' });
     }
 };
-//Luo kissan
+//Luo koiran
 const dog_create_post = async (req, res) => {
     console.log('posting a dog', req.body);
 
@@ -112,5 +122,5 @@ const dog_delete = async (req, res) => {
 };
 
 module.exports = {
-    getdogList, getdog, dog_create_post, dog_update_put, dog_delete
+    getdogList, getdog, dog_create_post, dog_update_put, dog_delete, getdogs,
 };

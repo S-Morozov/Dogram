@@ -1,5 +1,5 @@
 'use strict';
-import {url} from '../../utils/url.js';
+import { url } from '../../utils/url.js';
 (async () => {
   // check sessionStorage
   if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
@@ -23,9 +23,25 @@ import {url} from '../../utils/url.js';
         username: json.user.username,
         email: json.user.email
       };
-      sessionStorage.setItem('user', JSON.stringify(json.user));  
+      sessionStorage.setItem('user', JSON.stringify(json.user));
     }
   } catch (e) {
     console.log(e.message);
   }
 })();
+async function checkUserId(username, email) {
+  // Make a fetch request to the server to get the user ID
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+    },
+    body: JSON.stringify({ username, email })
+  };
+
+  const response = await fetch(url + '/user/getId', fetchOptions);
+  const json = await response.json();
+  return json.user_id;
+}
+export { checkUserId };

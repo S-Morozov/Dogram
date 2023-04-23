@@ -2,8 +2,8 @@
 const pool = require('../database/db');
 const getAllDogs = async () => {
   try {
-    const sql = `SELECT dogs.*, wop_user.name AS ownername FROM dogs
-                LEFT JOIN wop_user ON dogs.owner = wop_user.user_id`;
+    const sql = `SELECT dogs.*, users.name AS ownername FROM dogs
+                LEFT JOIN users ON dogs.owner = users.user_id`;
     const [rows] = await pool.query(sql);
     console.log(rows);
     return rows;
@@ -15,9 +15,8 @@ const getAllDogs = async () => {
 
 
 const getDog = async (id) => {
-  console.log(id);
   try {
-    const [dog] = await pool.query('SELECT * FROM dogs WHERE cat_id = ?', [id]);
+    const [dog] = await pool.query('SELECT * FROM dogs WHERE dog_id = ?', [id]);
     return dog;
   } catch (e) {
     console.error("error", e.message);
@@ -25,6 +24,16 @@ const getDog = async (id) => {
   }
 };
 
+const getUserDogs = async (id) => {
+  try {
+
+    const [dog] = await pool.query('SELECT * FROM dogs WHERE owner_id = ?', [id]);
+    return dog;
+  } catch (e) {
+    console.error("error", e.message);
+    return null;
+  }
+};
 const addDog = async (dog) => {
   console.log("Adding dog: ", dog);
   try {
@@ -94,5 +103,5 @@ const deleteDog = async (id, userId, userRole) => {
 
 
 module.exports = {
-  getDog, getAllDogs, addDog, updateDog, deleteDog
+  getDog, getAllDogs, addDog, updateDog, deleteDog, getUserDogs
 };

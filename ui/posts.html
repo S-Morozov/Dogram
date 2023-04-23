@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="formDiv">
-        <h3>Register</h3>
-        <form class="light-border" id="post">
-            <input class="light-border" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
-            <input class="light-border" type="text" name="breed" placeholder="breed" required>
-            <input class="light-border" type="number" name="age" placeholder="age" required>
-            <input type="radio" id="html" name="gender" value="Male" required>
-            <label for="Male">Male</label>
-            <input type="radio" id="css" name="gender" value="Female" required>
-            <label for="Female">Female</label>
-            <input class="light-border" type="text" name="color" placeholder="color" required>
-            <textarea class="light-border" name="bio" placeholder="Bio"></textarea>
-            <input class="light-border" type="file" name="file" accept="image/*" placeholder="Choose file" required>
-            <button class="light-border" type="submit">Save</button>
-        </form>
-    </div>
-</body>
-<script src="/utils/serialize.js"></script>
-<script type="module" src="js/posts.js"></script>
-<script type="module" src="js/check-login.js"></script>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div class="formDiv">
+            <h3>Post</h3>
+            <form class="light-border" id="post-form">
+                <textarea class="light-border" name="content" placeholder="content" required></textarea>
+                <select class="light-border" name="dog_id" required>
+                    <option value="">Select a dog</option>
+                </select>
+                <input class="light-border" type="file" name="file" multiple accept="image/*" placeholder="Choose file"
+                    required>
+                <button class="light-border" type="submit">Save</button>
+            </form>
+        </div>
+        <div id="postList"></div>
+
+    </body>
+    <script src="/utils/serialize.js"></script>
+    <script type="module" src="js/posts.js"></script>
+    <script type="module" src="js/check-login.js"></script>
+
 </html>

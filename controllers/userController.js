@@ -65,11 +65,20 @@ const user_create_post = async (req, res) => {
     });
   }
 };
-
-
+//Hakee käyttäjän ID:n
+const getUserId = async (req, res) => {
+  const { username, email } = req.body;
+  try {
+    const user_id = await userModel.checkUserId(username, email);
+    res.status(200).json({ user_id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get user ID' });
+  }
+};
 const checkToken = (req, res) => {
   res.json({ user: req.user });
 };
 module.exports = {
-  getUserList, getUser, user_create_post, checkToken
+  getUserList, getUser, user_create_post, checkToken, getUserId
 };

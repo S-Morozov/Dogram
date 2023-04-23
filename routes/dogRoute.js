@@ -7,12 +7,14 @@ const controller = require('../controllers/dogController');
 const { body, validationResult } = require('express-validator');
 const uploadMiddleware = require('../utils/multer');
 
-
 //Hakee kaikki koirat
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getdogList);
 
 //Hakee tietyn koiran
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getdog);
+
+//Hakee tietyn käyttäjän koirat
+router.get('/user/:id', passport.authenticate('jwt', { session: false }), controller.getdogs);
 
 // Lisää koiran
 router.post('/', passport.authenticate('jwt', { session: false }),
@@ -36,7 +38,6 @@ router.post('/', passport.authenticate('jwt', { session: false }),
     controller.dog_create_post(req, res);
   }
 );
-
 
 // Muokkaa koiraa
 router.put('/:id', body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
