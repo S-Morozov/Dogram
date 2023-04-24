@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-var cors = require('cors');
+let cors = require('cors');
 const passport = require('passport');
 const authRoute = require('./routes/authRoute');
 const dogRouter = require('./routes/dogRoute.js');
@@ -18,7 +18,16 @@ app.use("/", express.static("css"));
 app.use('/images', express.static('images'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
+
 });
+
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/ui/register.html')
+//
+// });
+
+
+
 
 // Log middleware
 app.use((req, res, next) => {
