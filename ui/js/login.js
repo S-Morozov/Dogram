@@ -15,7 +15,7 @@ loginForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/auth/login', fetchOptions);
   const json = await response.json();
   if (!json.user) {
-    alert(json.error.message);
+    alert("Username / password wrong");
   } else {
     // save token and user
     sessionStorage.setItem('token', json.token);

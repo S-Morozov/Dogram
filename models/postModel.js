@@ -23,6 +23,16 @@ const getPost = async (id) => {
         return null;
     }
 };
+const getUserPosts = async (id) => {
+    console.log(id);
+    try {
+        const [post] = await pool.query('SELECT * FROM posts WHERE user_id = ?', [id]);
+        return post;
+    } catch (e) {
+        console.error("error", e.message);
+        return null;
+    }
+};
 //Hakee postauksen kuvat
 const getMedia = async (post_id) => {
     try {
@@ -60,5 +70,5 @@ const addMedia = async ({ media_name, post_id }) => {
 };
 
 module.exports = {
-    getPostList, getPost, createPost, addMedia, getMedia
+    getPostList, getPost, createPost, addMedia, getMedia, getUserPosts,
 };

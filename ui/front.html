@@ -5,18 +5,41 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/front.css">
         <title>Front</title>
     </head>
 
     <body>
+        <header class="header-bar">
+            <button class="header-button" onclick="window.location.href='/ui/front.html'">Home</button>
+            <button class="header-button" onclick="window.location.href='/ui/profile-page.html'">Profile</button>
+            <button class="header-button" onclick="window.location.href='/ui/front.html'">Search</button>
+            <button class="header-button" id="logout">Logout</button>
+            <button class="header-button" onclick="window.location.href='/ui/registerDog.html'">Register pet</button>
+            <button class="header-button" onclick="window.location.href='/ui/posts.html'">Posts</button>
+        </header>
         <p>Tämä on front xD</p>
-        <button id="logout">Tässä on logout</button>
-        <button onclick="window.location.href='/ui/registerDog.html'">Registeröi lemmikki</button>
-        <button onclick="window.location.href='/ui/posts.html'">Postaukset</button>
+        <div class="formDiv">
+            <h3>Post</h3>
+            <form class="light-border" id="post-form">
+                <textarea class="light-border" name="content" placeholder="content" required minlength="3"
+                    pattern="[a-zA-Z0-9\s]{3,}"></textarea>
+                <select class="light-border" name="dog_id" required>
+                    <option value="">Select a dog</option>
+                </select>
+                <input class="light-border" type="file" name="file" multiple accept="image/*" placeholder="Choose file"
+                    required>
+                <button class="light-border" type="submit">Save</button>
+            </form>
+        </div>
+        <div id="postList"></div>
+
 
     </body>
     <script src="/utils/serialize.js"></script>
     <script type="module" src="js/front.js"></script>
     <script type="module" src="js/check-login.js"></script>
+    <script type="module" src="js/check-login.js"></script>
+    <script src="/ui/js/slideshow.js"></script>
 
 </html>

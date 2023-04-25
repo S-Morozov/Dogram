@@ -13,6 +13,9 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.get
 //Hakee postauksen ID:llä
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getPost);
 
+//Hakee yhden käyttäjän kaikki postaukset
+router.get('/user/:id', passport.authenticate('jwt', { session: false }), controller.getPost);
+
 //Tekee uuden postauksen
 router.post('/', passport.authenticate('jwt', { session: false }),
   uploadMiddleware.array('file', 5),
