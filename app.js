@@ -31,14 +31,6 @@ app.get('/', (req, res) => {
 
 });
 
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/ui/register.html')
-//
-// });
-
-
-
-
 // Log middleware
 app.use((req, res, next) => {
     console.log(Date.now() + ': request: ' + req.method + ' ' + req.path);
