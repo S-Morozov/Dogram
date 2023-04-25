@@ -10,16 +10,55 @@ const fetchOptions = {
   },
 };
 //Hakee kaikki postaukset ja laittaa ne UI
-const response2 = await fetch(url + '/post', fetchOptions);
-const posts = await response2.json();
-
+const response = await fetch(url + '/post', fetchOptions);
+const posts = await response.json();
 const postListDiv = document.getElementById('postList');
 postListDiv.innerHTML = '';
-posts.forEach((post) => {
-  const postDiv = document.createElement('div');
-  postDiv.textContent = post.content;
-  postListDiv.appendChild(postDiv);
+let mones = 0;
+posts.forEach(async (post) => {
+  const response2 = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
+  const images = await response2.json();
+  const postArticle = document.createElement('article');
+  postArticle.setAttribute('class', 'post');
+  postArticle.setAttribute('id', mones);
+
+  postArticle.innerHTML = `
+  <h2 style="display: none;">Postaus</h2>
+  <article id="content">
+    <h3 style="display: none;">Content</h3>
+    <div class="slideshow-container">
+      ${images.map((image, index) => `
+        <div class="mySlides fade ${index > 0 ? 'hidden' : ''}">
+          <img src="../../uploads/${image.media_name}" style="width:100%">
+          <div class="text">${image.media_name}</div>
+        </div>
+      `).join('')}
+      <a class="prev" onclick="plusSlides(-1, ${mones})">❮</a>
+      <a class="next" onclick="plusSlides(1, ${mones})">❯</a>
+    </div>
+    <br>
+    <div style="text-align:center">
+      ${images.map((_, index) => `
+        <span class="dot" onclick="currentSlide(${index + 1}, ${mones})"></span>
+      `).join('')}
+    </div>
+    <p>${post.content}</p>
+  </article>
+`;
+
+  mones++;
+  postListDiv.appendChild(postArticle);
+  // hide all slides except the first one
+  const slideshowContainers = postArticle.querySelectorAll(".slideshow-container");
+  slideshowContainers.forEach(container => {
+    const slides = container.querySelectorAll(".mySlides");
+    for (let i = 1; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+  });
 });
+
+
 // Fetch the user's dogs and add them to the dropdown menu
 const fetchUserDogs = async () => {
   try {
@@ -67,10 +106,11 @@ const createPost = async (data) => {
     body: formData,
     ...fetchOptions,
   });
-
+  console.log(formData);
   if (response.ok) {
     const newPost = await response.json();
     console.log('New post:', newPost);
+    window.location.reload();
   } else {
     console.error('Failed to create post');
   }
@@ -80,4 +120,4 @@ postForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = new FormData(postForm);
   await createPost(Object.fromEntries(formData.entries()));
-});
+});;

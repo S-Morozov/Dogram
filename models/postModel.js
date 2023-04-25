@@ -23,6 +23,17 @@ const getPost = async (id) => {
         return null;
     }
 };
+//Hakee postauksen kuvat
+const getMedia = async (post_id) => {
+    try {
+        const query = 'SELECT * FROM post_media WHERE post_id = ?';
+        const [result] = await pool.execute(query, [post_id]);
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw new Error('SQL query failed');
+    }
+};
 //Luo postauksen
 const createPost = async ({ content, created_at, user_id, dog_id }) => {
     console.log(content, created_at, user_id, dog_id);
@@ -49,5 +60,5 @@ const addMedia = async ({ media_name, post_id }) => {
 };
 
 module.exports = {
-    getPostList, getPost, createPost, addMedia
+    getPostList, getPost, createPost, addMedia, getMedia
 };

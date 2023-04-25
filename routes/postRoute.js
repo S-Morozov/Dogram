@@ -36,7 +36,8 @@ router.post('/', passport.authenticate('jwt', { session: false }),
     controller.create_post(req, res);
   }
 );
-
+//Hakee postauksen kuvat
+router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
 
 //Delete a post
 //router.delete('/:id', controller.post_delete);

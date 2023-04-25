@@ -23,6 +23,15 @@ const getPost = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+//Hakee postauksen kuvat
+const getPostMedia = async (req, res) => {
+    try {
+        const post = await postModel.getMedia(req.params.id);
+        res.json(post);
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+};
 //Luo postauksen
 const create_post = async (req, res) => {
     const { content, dog_id, user_id } = req.body;
@@ -59,4 +68,4 @@ const create_post = async (req, res) => {
 };
 
 
-module.exports = { getPostList, getPost, create_post, };
+module.exports = { getPostList, getPost, create_post, getPostMedia };

@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2db644;
+  margin: 0;
+}
+h1 {
+  color: #333;
+  margin-top: 50px;
+}
+
+p {
+  color: #666;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+/*Pää sektionit*/
+.mainSec {
+  width: 50vw;
+  height: 100%;
+  overflow: auto;
+  float: left;
+}
+
+/*Vasen section*/
+#sectionL {
+  background-color: rgba(255, 255, 255, 0.342);
+}
+
+/*Oikea section*/
+#sectionR {
+  background-color: rgb(63, 145, 53);
+}
+
+/*Vasen box missä post*/
+.post {
+  width: 40%;
+  margin: auto;
+  margin-top: 20vh;
+}
+
+.post img {
+  width: 100%;
+  height: 80%;
+  float: right;
+  border-bottom: solid;
+  border-color: goldenrod;
+}
+/*Yks postaus*/
+#content {
+  border-style: solid;
+  border-color: goldenrod;
+  height: 98%;
+  margin-left: 10%;
+  margin-right: 10px;
+  background-color: rgb(130, 238, 202);
+  box-shadow: 10px 5px 5px black;
+}
+
+/*Oikea box*/
+aside {
+  border-style: solid;
+  border-color: goldenrod;
+  width: 80%;
+  margin-top: 20vh;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 950px;
+  background-color: #368d53;
+  font-family: "Open Sans", sans-serif;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+aside ol {
+  margin-left: 20%;
+}
+
+aside li {
+  font-size: 1.25rem;
+  width: 60%;
+  line-height: 1.5;
+}
+
+aside li:not(:last-child) {
+  margin-bottom: 5px;
+}
+#fakefield {
+  width: 90%;
+}
+#fakebutton {
+  font-weight: bold;
+  border-style: solid;
+  border-color: red;
+  background-color: grey;
+  border-radius: 25px;
+  margin: 10px;
+  width: 150px;
+  text-align: center;
+}
+#fakebutton:hover {
+  background-color: pink;
+}
+
+#otsikko {
+  font-size: 3.125rem;
+  text-align: center;
+}
+#more {
+  position: fixed;
+  text-align: center;
+  left: 50vw;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+#more p {
+  color: rgb(226, 192, 43);
+  text-shadow: 2px 2px #7e3e02;
+  font-size: 1.5625rem;
+  font-weight: bolder;
+}
+
+#more p::after {
+  content: "\2193";
+  font-size: 3.125rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media only screen and (min-width: 1200px) {
+  aside li {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  #fakebutton {
+    width: 90%;
+  }
+  #fakefield {
+    width: 99%;
+  }
+}
+@media only screen and (max-width: 967px) {
+  aside li {
+    font-size: 100%;
+  }
+}
+@media only screen and (max-width: 606px) {
+  .mainSec {
+    width: 100%;
+    height: 100%;
+  }
+  #sectionR {
+    height: 1150px;
+  }
+}
+@media only screen and (max-width: 439px) {
+  aside {
+    margin-top: 10%;
+  }
+}
+@media only screen and (max-width: 375px) {
+  #more p {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 322px) {
+  aside {
+    width: 249px;
+  }
+  #fakebutton {
+    width: 90px;
+  }
+  #more p {
+    margin-bottom: -10px;
+    width: 290px;
+  }
+}

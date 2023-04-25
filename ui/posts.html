@@ -6,13 +6,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>
         <div class="formDiv">
             <h3>Post</h3>
             <form class="light-border" id="post-form">
-                <textarea class="light-border" name="content" placeholder="content" required></textarea>
+                <textarea class="light-border" name="content" placeholder="content" required minlength="3"
+                    pattern="[a-zA-Z0-9\s]{3,}"></textarea>
                 <select class="light-border" name="dog_id" required>
                     <option value="">Select a dog</option>
                 </select>
@@ -27,5 +29,6 @@
     <script src="/utils/serialize.js"></script>
     <script type="module" src="js/posts.js"></script>
     <script type="module" src="js/check-login.js"></script>
+    <script src="/ui/js/slideshow.js"></script>
 
 </html>
