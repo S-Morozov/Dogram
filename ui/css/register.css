@@ -109,3 +109,12 @@ input:focus {
 .light-border {
     padding: 8px, 12px;
 }
+
+h3 {
+    font-family: 'Overpass Mono', monospace;
+    word-spacing: -3px;
+    letter-spacing: -2px;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 20px;
+}
