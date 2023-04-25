@@ -28,7 +28,16 @@ app.use("/", express.static("css"));
 app.use('/images', express.static('images'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
+
 });
+
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/ui/register.html')
+//
+// });
+
+
+
 
 // Log middleware
 app.use((req, res, next) => {
