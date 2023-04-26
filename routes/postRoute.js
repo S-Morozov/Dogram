@@ -9,6 +9,7 @@ const uploadMiddleware = require('../utils/multer');
 
 //Hakee kommentit
 router.get('/comments', passport.authenticate('jwt', { session: false }), controller.getCommentList);
+
 //Hakee kaikki postaukset
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getPostList);
 
@@ -22,7 +23,7 @@ router.get('/user/:id', passport.authenticate('jwt', { session: false }), contro
 router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
 
 //Tekee uuden postauksen
-router.post('/', passport.authenticate('jwt', { session: false }),
+router.post('/:user_id', passport.authenticate('jwt', { session: false }),
   uploadMiddleware.array('file', 5),
   body('content').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
   body('file').custom((value, { req }) => {

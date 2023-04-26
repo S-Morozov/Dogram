@@ -53,7 +53,8 @@ const getCommentList = async (req, res) => {
 };
 //Luo postauksen
 const create_post = async (req, res) => {
-    const { content, dog_id, user_id } = req.body;
+    const { content, dog_id} = req.body;
+    const user_id = req.params.user_id
     const filenames = req.files ? req.files.map(file => ({
         name: file.filename,
         path: file.path

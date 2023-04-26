@@ -21,7 +21,7 @@
         <p>Tämä on front xD</p>
         <div class="formDiv">
             <h3>Post</h3>
-            <form class="light-border" id="post-form">
+            <form class="light-border" id="post-form" enctype="multipart/form-data">
                 <textarea class="light-border" name="content" placeholder="content" required minlength="3"
                     pattern="[a-zA-Z0-9\s]{3,}"></textarea>
                 <select class="light-border" name="dog_id" required>
@@ -39,5 +39,6 @@
     <script src="/utils/serialize.js"></script>
     <script type="module" src="js/front.js"></script>
     <script type="module" src="js/check-login.js"></script>
+    <script src="js/slides.js"></script>
 
 </html>

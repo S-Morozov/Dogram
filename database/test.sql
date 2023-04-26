@@ -116,19 +116,6 @@ DELETE FROM `posts`;
 INSERT INTO `posts` (`post_id`, `content`, `created_at`, `user_id`, `dog_id`) VALUES
 	(19, 'test', '2023-04-23', 2, 2);
 
--- Dumping structure for view dogdb.post_details
-DROP VIEW IF EXISTS `post_details`;
--- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `post_details` (
-	`post_id` INT(11) NOT NULL,
-	`content` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
-	`created_at` DATE NOT NULL,
-	`user_id` INT(11) NOT NULL,
-	`dog_id` INT(11) NOT NULL,
-	`media_name` TEXT NULL COLLATE 'utf8mb4_general_ci',
-	`media_id` INT(11) NULL
-) ENGINE=MyISAM;
-
 -- Dumping structure for table dogdb.post_media
 DROP TABLE IF EXISTS `post_media`;
 CREATE TABLE IF NOT EXISTS `post_media` (
