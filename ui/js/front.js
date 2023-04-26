@@ -40,7 +40,7 @@ posts.forEach(async (post) => {
   const images = await response2.json();
   const postArticle = document.createElement('article');
   postArticle.setAttribute('class', 'post');
-  postArticle.setAttribute('id', mones);
+  postArticle.setAttribute('id', post.post_id);
 
   postArticle.innerHTML = `
   <h2 style="display: none;">Postaus</h2>
@@ -53,18 +53,24 @@ posts.forEach(async (post) => {
           <div class="text">${image.media_name}</div>
         </div>
       `).join('')}
-      <a class="prev" onclick="plusSlides(-1, ${mones})">❮</a>
-      <a class="next" onclick="plusSlides(1, ${mones})">❯</a>
+      <a class="prev" onclick="plusSlides(-1, ${post.post_id})">❮</a>
+      <a class="next" onclick="plusSlides(1, ${post.post_id})">❯</a>
     </div>
     <br>
     <div style="text-align:center">
       ${images.map((_, index) => `
-        <span class="dot" onclick="currentSlide(${index + 1}, ${mones})"></span>
+        <span class="dot" onclick="currentSlide(${index + 1}, ${post.post_id})"></span>
       `).join('')}
     </div>
     <p>${post.content}</p>
+    <div>
+      <button id="like-btn" onclick="likePost(${post.id})">Like</button>
+      <input type="text" id="comment-field" placeholder="Add a comment">
+      <button id="comment-btn" onclick="addComment(${post.id})">Post comment</button>
+    </div>
   </article>
 `;
+
 
   mones++;
   postListDiv.appendChild(postArticle);
@@ -135,6 +141,54 @@ const createPost = async (data) => {
     console.error('Failed to create post');
   }
 };
+
+let slideIndex = 1;
+
+showSlides(slideIndex);
+// Next/previous controls
+function plusSlides(n, id) {
+  let article = document.getElementById(id);
+  let slides = article.getElementsByClassName("mySlides");
+  let dots = article.getElementsByClassName("dot");
+  slideIndex += n;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+  if (slideIndex < 1) {
+    slideIndex = slides.length;
+  }
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " active";
+}
+
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) { slideIndex = 1; }
+  if (n < 1) { slideIndex = slides.length; }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " active";
+}
+
 
 postForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();

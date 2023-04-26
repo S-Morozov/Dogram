@@ -7,6 +7,8 @@ const { body, validationResult } = require('express-validator');
 const controller = require('../controllers/postController');
 const uploadMiddleware = require('../utils/multer');
 
+//Hakee kommentit
+router.get('/comments', passport.authenticate('jwt', { session: false }), controller.getCommentList);
 //Hakee kaikki postaukset
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getPostList);
 
@@ -14,7 +16,10 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.get
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getPost);
 
 //Hakee yhden käyttäjän kaikki postaukset
-router.get('/user/:id', passport.authenticate('jwt', { session: false }), controller.getPost);
+router.get('/user/:id', passport.authenticate('jwt', { session: false }), controller.getUserPosts);
+
+//Hakee postauksen kuvat
+router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
 
 //Tekee uuden postauksen
 router.post('/', passport.authenticate('jwt', { session: false }),
@@ -39,8 +44,19 @@ router.post('/', passport.authenticate('jwt', { session: false }),
     controller.create_post(req, res);
   }
 );
-//Hakee postauksen kuvat
-router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
+
+//Lisää kommentin
+router.post('/postComment', passport.authenticate('jwt', { session: false }),
+  body('comment-field').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    controller.create_comment(req, res);
+  }
+);
+//Lisää tykkäyksen
 
 //Delete a post
 //router.delete('/:id', controller.post_delete);

@@ -42,6 +42,15 @@ const getPostMedia = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+//Hakee postauksen kommentit
+const getCommentList = async (req, res) => {
+    try {
+        const post = await postModel.getMedia(req.params.id);
+        res.json(post);
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+};
 //Luo postauksen
 const create_post = async (req, res) => {
     const { content, dog_id, user_id } = req.body;
@@ -76,6 +85,23 @@ const create_post = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+//Luo uuden kommentin
+const create_comment = async (req, res) => {
+    const { comment_field } = req.body;
+    const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    try {
+        const newComment = await postModel.createComment; ({
+            comment_field,
+            created_at,
+            user_id,
+            post_id
+        });
+        res.status(201).json(newComment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 
 
-module.exports = { getPostList, getPost, create_post, getPostMedia, getUserPosts };
+module.exports = { getPostList, getPost, create_post, getPostMedia, getUserPosts, create_comment, getCommentList };
