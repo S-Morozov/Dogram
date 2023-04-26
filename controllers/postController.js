@@ -53,31 +53,31 @@ const getCommentList = async (req, res) => {
 };
 //Luo postauksen
 const create_post = async (req, res) => {
-    const { content, dog_id} = req.body;
-    const user_id = req.params.user_id
-    const filenames = req.files ? req.files.map(file => ({
-        name: file.filename,
-        path: file.path
-    })) : [];
+    const { content, dog_id } = req.body;
+    const user_id = req.params.user_id;
     const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
     try {
         //Luo postauksen
         const newPost = await postModel.createPost({
             content,
             created_at,
             user_id,
-            dog_id
+            dog_id,
         });
 
         // Lisää kuvat omaan tauluun
-        if (filenames.length > 0) {
-            await Promise.all(filenames.map(async (filename) => {
-                await makeThumbnail(filename.path, filename.name);
-                await postModel.addMedia({
-                    media_name: filename.name,
-                    post_id: newPost.post_id
-                });
-            }));
+        if (req.files && req.files.length > 0) {
+            await Promise.all(
+                req.files.map(async (file) => {
+                    console.log(file);
+                    await makeThumbnail(file.path, file.originalname);
+                    await postModel.addMedia({
+                        media_name: file.originalname,
+                        post_id: newPost.post_id,
+                    });
+                })
+            );
         }
 
         res.status(201).json(newPost);
@@ -86,6 +86,7 @@ const create_post = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
 //Luo uuden kommentin
 const create_comment = async (req, res) => {
     const { comment_field } = req.body;

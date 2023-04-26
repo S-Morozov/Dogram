@@ -25,26 +25,24 @@ router.get('/media/:id', passport.authenticate('jwt', { session: false }), contr
 //Tekee uuden postauksen
 router.post('/:user_id', passport.authenticate('jwt', { session: false }),
   uploadMiddleware.array('file', 5),
-  body('content').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
-  body('file').custom((value, { req }) => {
-    if (!req.files || req.files.length === 0) {
-      throw new Error('Files are required');
-    }
-    for (let file of req.files) {
-      if (!['image/png', 'image/jpeg', 'image/gif'].includes(file.mimetype)) {
-        throw new Error('Invalid file type');
+  body('content').isLength({ min: 3 }).withMessage('Content must be at least 3 characters').trim().escape(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
       }
+      // Call the create_post function with the req object
+      const newPost = await controller.create_post(req, res);
+
+      res.status(201).json(newPost);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
-    return true;
-  }),
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    controller.create_post(req, res);
   }
 );
+
 
 //Lisää kommentin
 router.post('/postComment', passport.authenticate('jwt', { session: false }),

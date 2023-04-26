@@ -85,7 +85,7 @@ posts.forEach(async (post) => {
 });
 
 
-// Fetch the user's dogs and add them to the dropdown menu
+//Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {
   try {
     const sessionToken = sessionStorage.getItem('user');
@@ -112,53 +112,28 @@ const fetchUserDogs = async () => {
 fetchUserDogs();
 
 // Create a new post and fetch all posts
-const createPost = async (data) => {
-  const formData = new FormData();
-  formData.append('content', data.content);
-  const fileInput = document.querySelector('input[type="file"]');
-
-  if (fileInput.files.length > 0) {
-    for (let i = 0; i < fileInput.files.length; i++) {
-      formData.append('file', fileInput.files[i]);
-    }
-  }
-
-  const dogId = dropdown.value;
-  formData.append('dog_id', dogId);
-  formData.append('user_id', user_id);
-
-  const response = await fetch(url + '/post', {
-    method: 'POST',
-    body: formData,
-    ...fetchOptions,
-  });
-  console.log(formData);
-  if (response.ok) {
-    const newPost = await response.json();
-    console.log('New post:', newPost);
-    window.location.reload();
-  } else {
-    console.error('Failed to create post');
-  }
-};
-
-
-
-//Tämä on postauksen lisäys
 postForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = new FormData(postForm);
   const fetchOptions = {
     method: 'POST',
     headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
     },
     body: formData,
-};
-const sessionToken = sessionStorage.getItem('user');
-    const user = JSON.parse(sessionToken);
-    const username = user.username;
-    const email = user.email;
-    user_id = await userRoute.checkUserId(username, email);
-  await fetch(url + '/post/'+(user_id), fetchOptions)
-});;
+  };
+  const sessionToken = sessionStorage.getItem('user');
+  const user = JSON.parse(sessionToken);
+  const username = user.username;
+  const email = user.email;
+  const user_id = await userRoute.checkUserId(username, email);
+  const response = await fetch(url + '/post/' + user_id, fetchOptions);
+  if (response.ok) {
+    const newPost = await response.json();
+    console.log('New post:', newPost);
+    alert("New Post created!");
+    window.location.reload();
+  } else {
+    console.error('Failed to create post');
+  }
+});
