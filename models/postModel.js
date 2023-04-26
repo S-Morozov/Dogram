@@ -44,6 +44,16 @@ const getMedia = async (post_id) => {
         throw new Error('SQL query failed');
     }
 };
+const getComments = async (post_id) => {
+    try {
+        const query = 'SELECT * FROM comments WHERE post_id = ?';
+        const [result] = await pool.execute(query, [post_id]);
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw new Error('SQL query failed');
+    }
+};
 //Luo postauksen
 const createPost = async ({ content, created_at, user_id, dog_id }) => {
     console.log(content, created_at, user_id, dog_id);
@@ -57,8 +67,21 @@ const createPost = async ({ content, created_at, user_id, dog_id }) => {
         throw new Error('SQL query failed');
     }
 };
+//Luo kommentin
+const createComment = async ({ content, created_at, user_id, dog_id }) => {
+    console.log(content, created_at, user_id, dog_id);
+    try {
+        const query = 'INSERT INTO comments (content, created_at, user_id, post_id) VALUES (?, ?, ?, ?)';
+        const [result] = await pool.execute(query, [content, created_at, user_id, post_id]);
+        const post_id = result.insertId;
+        return { post_id, content, created_at, user_id, post_id };
+    } catch (error) {
+        console.error(error);
+        throw new Error('SQL query failed');
+    }
+};
 //Lisää kuvat
-const addMedia = async ({ media_name, post_id }) => {
+const addMedia = async ({ post_id }) => {
     try {
         const query = 'INSERT INTO post_media (media_name, post_id) VALUES (?, ?)';
         const [result] = await pool.execute(query, [media_name, post_id]);
@@ -70,5 +93,5 @@ const addMedia = async ({ media_name, post_id }) => {
 };
 
 module.exports = {
-    getPostList, getPost, createPost, addMedia, getMedia, getUserPosts,
+    getPostList, getPost, createPost, addMedia, getMedia, getUserPosts, getComments, createComment,
 };

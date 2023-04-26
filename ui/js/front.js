@@ -34,10 +34,11 @@ const response = await fetch(url + '/post', fetchOptions);
 const posts = await response.json();
 const postListDiv = document.getElementById('postList');
 postListDiv.innerHTML = '';
-let mones = 0;
 posts.forEach(async (post) => {
-  const response2 = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
-  const images = await response2.json();
+  const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
+  const images = await response.json();
+  const response2 = await fetch(url + `/post/comments/${post.post_id}`, fetchOptions);
+  const comments = await response2.json();
   const postArticle = document.createElement('article');
   postArticle.setAttribute('class', 'post');
   postArticle.setAttribute('id', post.post_id);
@@ -65,14 +66,18 @@ posts.forEach(async (post) => {
     <p>${post.content}</p>
     <div>
       <button id="like-btn" onclick="likePost(${post.id})">Like</button>
-      <input type="text" id="comment-field" placeholder="Add a comment">
-      <button id="comment-btn" onclick="addComment(${post.id})">Post comment</button>
+      <form id="comment-form">
+        <input type="text" id="comment-field" placeholder="Add a comment">
+        <button type="submit">Post comment</button>
+      </form>
+    </div>
+    <div id="comment-section">
+      ${comments.map(comment => `
+        <p>${comment.text}</p>
+      `).join('')}
     </div>
   </article>
 `;
-
-
-  mones++;
   postListDiv.appendChild(postArticle);
   // hide all slides except the first one
   const slideshowContainers = postArticle.querySelectorAll(".slideshow-container");
@@ -82,8 +87,38 @@ posts.forEach(async (post) => {
       slides[i].style.display = "none";
     }
   });
+  // Add event listener for form submission
+  const commentForm = postArticle.querySelector('#comment-form');
+  commentForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    const commentField = document.getElementById('comment-field');
+    const commentText = commentField.value;
+    commentField.value = '';
+    try {
+      const response = await fetch(`/postComment/${post.post_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: commentText })
+      });
+      const data = await response.json();
+      const commentSection = document.getElementById('comment-section');
+      const newComment = `
+      <div class="comment">
+        <div class="commenter">
+          <img src="${data.commenter_image}">
+          <p>${data.commenter_name}</p>
+        </div>
+        <p class="comment-text">${data.text}</p>
+      </div>
+    `;
+      commentSection.insertAdjacentHTML('beforeend', newComment);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+  });
 });
-
 
 //Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {

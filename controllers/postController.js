@@ -45,7 +45,7 @@ const getPostMedia = async (req, res) => {
 //Hakee postauksen kommentit
 const getCommentList = async (req, res) => {
     try {
-        const post = await postModel.getMedia(req.params.id);
+        const post = await postModel.getComments(req.params.id);
         res.json(post);
     } catch (error) {
         res.status(500).send('Internal Server Error');

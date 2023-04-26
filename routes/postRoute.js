@@ -7,8 +7,8 @@ const { body, validationResult } = require('express-validator');
 const controller = require('../controllers/postController');
 const uploadMiddleware = require('../utils/multer');
 
-//Hakee kommentit
-router.get('/comments', passport.authenticate('jwt', { session: false }), controller.getCommentList);
+//Hakee postauksen kommentit
+router.get('/comments/:id', passport.authenticate('jwt', { session: false }), controller.getCommentList);
 
 //Hakee kaikki postaukset
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getPostList);
@@ -45,7 +45,7 @@ router.post('/:user_id', passport.authenticate('jwt', { session: false }),
 
 
 //Lisää kommentin
-router.post('/postComment', passport.authenticate('jwt', { session: false }),
+router.post('/postComment/:id', passport.authenticate('jwt', { session: false }),
   body('comment-field').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
   (req, res) => {
     const errors = validationResult(req);
