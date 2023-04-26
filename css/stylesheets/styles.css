@@ -375,8 +375,12 @@ ul.slides input {
 }
 
 .slide-image img {
-
   min-width: 20%;
+}
+
+.img-fest {
+  width: 50%;
+  border-radius: 50px;
 }
 
 .carousel-controls {
