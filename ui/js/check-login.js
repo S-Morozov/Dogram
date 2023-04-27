@@ -29,19 +29,3 @@ import { url } from '../../utils/url.js';
     console.log(e.message);
   }
 })();
-async function checkUserId(username, email) {
-  // Make a fetch request to the server to get the user ID
-  const fetchOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-    },
-    body: JSON.stringify({ username, email })
-  };
-
-  const response = await fetch(url + '/user/getId', fetchOptions);
-  const json = await response.json();
-  return json.user_id;
-}
-export { checkUserId };

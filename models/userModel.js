@@ -12,7 +12,7 @@ const getAllUsers = async () => {
 
 const getUser = async (id) => {
   try {
-    const [user] = await pool.query('SELECT username, email FROM users WHERE user_id = ?', [id]);
+    const [user] = await pool.query('SELECT user_id, username, email, profile_image FROM users WHERE user_id = ?', [id]);
     return user[0];
   } catch (e) {
     console.error("error", e.message);

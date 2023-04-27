@@ -43,10 +43,9 @@ router.post('/:user_id', passport.authenticate('jwt', { session: false }),
   }
 );
 
-
 //Lisää kommentin
 router.post('/postComment/:id', passport.authenticate('jwt', { session: false }),
-  body('comment-field').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
+  body('text').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

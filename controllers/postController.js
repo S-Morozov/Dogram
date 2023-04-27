@@ -89,14 +89,15 @@ const create_post = async (req, res) => {
 
 //Luo uuden kommentin
 const create_comment = async (req, res) => {
-    const { comment_field } = req.body;
+    const { text, user_id } = req.body;
+    const { id } = req.params;
     const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
     try {
-        const newComment = await postModel.createComment; ({
-            comment_field,
+        const newComment = await postModel.createComment({
+            text,
             created_at,
             user_id,
-            post_id
+            post_id: id
         });
         res.status(201).json(newComment);
     } catch (error) {

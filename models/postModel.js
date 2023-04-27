@@ -46,7 +46,7 @@ const getMedia = async (post_id) => {
 };
 const getComments = async (post_id) => {
     try {
-        const query = 'SELECT * FROM comments WHERE post_id = ?';
+        const query = 'SELECT comments.*, users.username, users.profile_image FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE comments.post_id = ?';
         const [result] = await pool.execute(query, [post_id]);
         return result;
     } catch (error) {
@@ -68,13 +68,12 @@ const createPost = async ({ content, created_at, user_id, dog_id }) => {
     }
 };
 //Luo kommentin
-const createComment = async ({ content, created_at, user_id, dog_id }) => {
-    console.log(content, created_at, user_id, dog_id);
+const createComment = async ({ text, created_at, user_id, post_id }) => {
+    console.log(text, created_at, user_id, post_id);
     try {
         const query = 'INSERT INTO comments (content, created_at, user_id, post_id) VALUES (?, ?, ?, ?)';
-        const [result] = await pool.execute(query, [content, created_at, user_id, post_id]);
-        const post_id = result.insertId;
-        return { post_id, content, created_at, user_id, post_id };
+        const [result] = await pool.execute(query, [text, created_at, user_id, post_id]);
+        return { text };
     } catch (error) {
         console.error(error);
         throw new Error('SQL query failed');

@@ -1,11 +1,17 @@
 'use strict';
 const logout = document.querySelector("#logout");
 import { url } from '../../utils/url.js';
-import * as userRoute from './check-login.js';
 
+const getUserinfo = async () => {
+  const sessionToken = sessionStorage.getItem('user');
+  const user = JSON.parse(sessionToken);
+  return user;
+};
+
+// Call the function to get the user ID
+var user = await getUserinfo();
 const postForm = document.querySelector('#post-form');
 const dropdown = document.querySelector('select[name="dog_id"]');
-let user_id = 0;
 const fetchOptions = {
   headers: {
     Authorization: 'Bearer ' + sessionStorage.getItem('token'),
@@ -73,13 +79,18 @@ posts.forEach(async (post) => {
     </div>
     <div id="comment-section">
       ${comments.map(comment => `
-        <p>${comment.text}</p>
+      <div class="comment">
+        <div class="commenter">
+          <img src= "/../uploads/${comment.profile_image}">
+          <p>${comment.username}</p>
+        </div>
+        <p class="comment-text">${comment.content}</p>
+      </div>
       `).join('')}
     </div>
   </article>
 `;
   postListDiv.appendChild(postArticle);
-  // hide all slides except the first one
   const slideshowContainers = postArticle.querySelectorAll(".slideshow-container");
   slideshowContainers.forEach(container => {
     const slides = container.querySelectorAll(".mySlides");
@@ -87,30 +98,30 @@ posts.forEach(async (post) => {
       slides[i].style.display = "none";
     }
   });
-  // Add event listener for form submission
+  //Lähettää kommentin
   const commentForm = postArticle.querySelector('#comment-form');
   commentForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
     const commentField = document.getElementById('comment-field');
     const commentText = commentField.value;
     commentField.value = '';
     try {
-      const response = await fetch(`/postComment/${post.post_id}`, {
+      const response = await fetch(url + `/post/postComment/${post.post_id}`, {
         method: 'POST',
         headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ text: commentText })
+        body: JSON.stringify({ text: commentText, user_id: user.user_id })
       });
-      const data = await response.json();
       const commentSection = document.getElementById('comment-section');
       const newComment = `
       <div class="comment">
         <div class="commenter">
-          <img src="${data.commenter_image}">
-          <p>${data.commenter_name}</p>
+          <img src="/../uploads/${user.profile_image}">
+          <p>${user.username}</p>
         </div>
-        <p class="comment-text">${data.text}</p>
+        <p class="comment-text">${commentText}</p>
       </div>
     `;
       commentSection.insertAdjacentHTML('beforeend', newComment);
@@ -123,13 +134,7 @@ posts.forEach(async (post) => {
 //Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {
   try {
-    const sessionToken = sessionStorage.getItem('user');
-    const user = JSON.parse(sessionToken);
-    const username = user.username;
-    const email = user.email;
-    user_id = await userRoute.checkUserId(username, email);
-
-    const response = await fetch(url + `/dog/user/${user_id}`, fetchOptions);
+    const response = await fetch(url + `/dog/user/${user.user_id}`, fetchOptions);
     const dogs = await response.json();
 
     // add each dog to the dropdown menu
@@ -157,11 +162,6 @@ postForm.addEventListener('submit', async (evt) => {
     },
     body: formData,
   };
-  const sessionToken = sessionStorage.getItem('user');
-  const user = JSON.parse(sessionToken);
-  const username = user.username;
-  const email = user.email;
-  const user_id = await userRoute.checkUserId(username, email);
   const response = await fetch(url + '/post/' + user_id, fetchOptions);
   if (response.ok) {
     const newPost = await response.json();
