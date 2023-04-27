@@ -22,6 +22,9 @@ router.get('/user/:id', passport.authenticate('jwt', { session: false }), contro
 //Hakee postauksen kuvat
 router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
 
+//Hakee tietyn käyttäjän tykkäyksen, jos on
+router.get('/like/:user_id,:post_id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
+
 //Tekee uuden postauksen
 router.post('/:user_id', passport.authenticate('jwt', { session: false }),
   uploadMiddleware.array('file', 5),
@@ -55,7 +58,15 @@ router.post('/postComment/:id', passport.authenticate('jwt', { session: false })
   }
 );
 //Lisää tykkäyksen
-
+router.post('/like/:id', passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    controller.create_like(req, res);
+  }
+);
 //Delete a post
 //router.delete('/:id', controller.post_delete);
 module.exports = router;

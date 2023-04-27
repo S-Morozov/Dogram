@@ -6,7 +6,6 @@ const authRoute = require('./routes/authRoute');
 const dogRouter = require('./routes/dogRoute.js');
 const userRouter = require('./routes/userRoute.js');
 const postRouter = require('./routes/postRoute.js');
-const mime = require('mime');
 require('./utils/passport');
 
 const app = express();

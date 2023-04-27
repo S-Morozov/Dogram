@@ -40,6 +40,7 @@ const response = await fetch(url + '/post', fetchOptions);
 const posts = await response.json();
 const postListDiv = document.getElementById('postList');
 postListDiv.innerHTML = '';
+
 posts.forEach(async (post) => {
   const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
   const images = await response.json();
@@ -48,7 +49,6 @@ posts.forEach(async (post) => {
   const postArticle = document.createElement('article');
   postArticle.setAttribute('class', 'post');
   postArticle.setAttribute('id', post.post_id);
-
   postArticle.innerHTML = `
   <h2 style="display: none;">Postaus</h2>
   <article id="content">
@@ -71,7 +71,9 @@ posts.forEach(async (post) => {
     </div>
     <p>${post.content}</p>
     <div>
-      <button id="like-btn" onclick="likePost(${post.id})">Like</button>
+    <form id="likePost">
+      <button type="submit" id="likeButton">Like</button>
+      </form>
       <form id="comment-form">
         <input type="text" id="comment-field" placeholder="Add a comment">
         <button type="submit">Post comment</button>
@@ -81,7 +83,7 @@ posts.forEach(async (post) => {
       ${comments.map(comment => `
       <div class="comment">
         <div class="commenter">
-          <img src= "/../uploads/${comment.profile_image}">
+          <img src= "/../thumbnails/${comment.profile_image}">
           <p>${comment.username}</p>
         </div>
         <p class="comment-text">${comment.content}</p>
@@ -118,7 +120,7 @@ posts.forEach(async (post) => {
       const newComment = `
       <div class="comment">
         <div class="commenter">
-          <img src="/../uploads/${user.profile_image}">
+          <img src="/../thumbnails/${user.profile_image}">
           <p>${user.username}</p>
         </div>
         <p class="comment-text">${commentText}</p>
@@ -128,6 +130,43 @@ posts.forEach(async (post) => {
     } catch (error) {
       console.error('Error adding comment:', error);
     }
+  });
+  const likePost = postArticle.querySelector('#likePost');
+  //Liken lisääminen
+  likePost.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const post_id = post.post_id;
+    try {
+      const response = await fetch(url + `/post/like/${user_id, post_id}`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
+      });
+      const like = await response.json();
+      console.log(like);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+    if (condition) {
+      try {
+        const response = await fetch(url + `/post/like/${post_id}`, {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
+        });
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
+    } else {
+
+    }
+
   });
 });
 
