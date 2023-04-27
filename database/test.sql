@@ -151,6 +151,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` date NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+<<<<<<< HEAD
+=======
+
+DELIMITER //
+-- Create trigger to automatically insert into User_role table
+CREATE TRIGGER insert_user_role
+AFTER INSERT ON users
+FOR EACH ROW
+BEGIN
+    INSERT INTO userroles (user_id, role_id)
+    VALUES (NEW.user_id, 1);
+END//
+DELIMITER ;
+>>>>>>> dc457f306397cea0516dd9b5ba3ef2b304a5c371
 
 -- Dumping data for table dogdb.users: ~0 rows (approximately)
 DELETE FROM `users`;

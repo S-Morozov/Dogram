@@ -19,7 +19,10 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 router.post('/getId', passport.authenticate('jwt', { session: false }), controller.getUserId);
 // POST
 router.post('/',
+<<<<<<< HEAD
   body('name').isAlpha().isLength({ min: 3 }).withMessage('Name must be at least 3 characters').trim().escape(),
+=======
+>>>>>>> dc457f306397cea0516dd9b5ba3ef2b304a5c371
   body('email').isEmail().withMessage('Email must be valid').normalizeEmail(),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
   (req, res) => {

@@ -25,8 +25,17 @@ const addUser = async (user) => {
     const [result] = await pool.query('INSERT INTO users (username, email, password, profile_image, bio, location, website, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
       user.username,
       user.email,
+<<<<<<< HEAD
       user.passwd,
       user.role
+=======
+      user.password,
+      user.profile_image || null,
+      user.bio || null,
+      user.location,
+      user.website || null,
+      new Date().toISOString().slice(0, 19).replace('T', ' ') // to get the current date and time in the correct format for the MySQL datetime type
+>>>>>>> dc457f306397cea0516dd9b5ba3ef2b304a5c371
     ]);
     return result;
   } catch (e) {
