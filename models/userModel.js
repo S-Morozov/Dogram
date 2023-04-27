@@ -25,11 +25,11 @@ const addUser = async (user) => {
       user.username,
       user.email,
       user.password,
-      user.profile_image ?? "default_profile.png",
+      user.profile_image || null,
       user.bio || null,
       user.location,
       user.website || null,
-      new Date().toISOString().slice(0, 19).replace('T', ' ')
+      new Date().toISOString().slice(0, 19).replace('T', ' ') // to get the current date and time in the correct format for the MySQL datetime type
     ]);
     return result;
   } catch (e) {
