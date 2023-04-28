@@ -5,26 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/register.css">
     <title>Document</title>
 </head>
 
 <body>
     <div class="main-content">
-    <div class="formDiv">
-        <h3>Register</h3>
-        <form class="input-1" id="add-dog-form">
-            <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
-            <input class="input-1" type="text" name="breed" placeholder="breed" required>
-            <input class="input-1" type="number" name="age" placeholder="age" required>
-            <input type="radio" id="html" name="gender" value="Male" required>
-            <label for="Male">Male</label>
-            <input type="radio" id="css" name="gender" value="Female" required>
-            <label for="Female">Female</label>
-            <input class="input-1" type="text" name="color" placeholder="color" required>
-            <textarea class="input-1" name="bio" placeholder="Bio"></textarea>
-            <input class="light-border" type="file" name="file" accept="image/*" placeholder="Choose file" required>
-            <button type="submit">Save</button>
-        </form>
+        <div class="formDiv">
+            <h3>Register</h3>
+            <form class="input-1" id="add-dog-form">
+                <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
+                <input class="input-1" type="text" name="breed" placeholder="breed" required>
+                <input class="input-1" type="number" name="age" placeholder="age" required>
+                <input type="radio" id="html" name="gender" value="Male" required>
+                <label for="Male">Male</label>
+                <input type="radio" id="css" name="gender" value="Female" required>
+                <label for="Female">Female</label>
+                <input class="input-1" type="text" name="color" placeholder="color" required>
+                <textarea class="input-1" name="bio" placeholder="Bio"></textarea>
+                <input class="light-border" type="file" name="file" accept="image/*" placeholder="Choose file" required>
+                <button type="submit">Save</button>
+            </form>
         </div> 
     </div>
     <script type="module" src="/utils/serialize.js"></script>
