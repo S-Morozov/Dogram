@@ -201,7 +201,7 @@ postForm.addEventListener('submit', async (evt) => {
     },
     body: formData,
   };
-  const response = await fetch(url + '/post/' + user_id, fetchOptions);
+  const response = await fetch(url + '/post/' + user.user_id, fetchOptions);
   if (response.ok) {
     const newPost = await response.json();
     console.log('New post:', newPost);
