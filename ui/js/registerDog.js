@@ -12,6 +12,9 @@ addDogForm.addEventListener('submit', async (evt) => {
         body: fd,
     };
     const response = await fetch(url + '/dog', fetchOptions);
-    const json = await response.json();
-    console.log('add response', json);
+    if (response.ok) {
+        const json = await response.json();
+        console.log('add response', json);
+        location.href = 'front.html';
+    }
 });

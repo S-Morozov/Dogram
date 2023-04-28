@@ -103,7 +103,8 @@ const createLike = async ({ created_at, user_id, post_id }) => {
     }
 };
 //Lisää kuvat
-const addMedia = async ({ post_id }) => {
+const addMedia = async ({ post_id, media_name }) => {
+    console.log();
     try {
         const query = 'INSERT INTO post_media (media_name, post_id) VALUES (?, ?)';
         const [result] = await pool.execute(query, [media_name, post_id]);

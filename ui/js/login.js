@@ -24,3 +24,33 @@ loginForm.addEventListener('submit', async (evt) => {
     location.href = "front.html";
   }
 });
+console.log(location.href);
+
+(async () => {
+  // check sessionStorage
+  if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+    return;
+  }
+  // check if token valid
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/user/token', fetchOptions);
+    if (!response.ok) {
+      location.href = 'login.html';
+    } else {
+      const json = await response.json();
+      sessionStorage.setItem('user', JSON.stringify(json.user));
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+})();
+(async () => {
+  if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+    location.href='front.html'
+  }
+})();
