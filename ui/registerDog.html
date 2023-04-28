@@ -10,9 +10,13 @@
 </head>
 
 <body>
+    <div id="wrapper">
     <div class="main-content">
+        <div class="header">
+            <img src="/images/logo-paw-transparent.png" alt="image" />
+        </div>
         <div class="formDiv">
-            <h3>Register</h3>
+            <h3>Register dog</h3>
             <form class="input-1" id="add-dog-form">
                 <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
                 <input class="input-1" type="text" name="breed" placeholder="breed" required>
@@ -27,6 +31,7 @@
                 <button type="submit">Save</button>
             </form>
         </div> 
+    </div>
     </div>
     <script type="module" src="/utils/serialize.js"></script>
     <script type="module" src="js/registerDog.js"></script>
