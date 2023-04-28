@@ -19,13 +19,13 @@ router.post('/:post_id,:user_id', passport.authenticate('jwt', { session: false 
     }
 );
 //Poistaa tykkäyksen
-router.post('/:post_id,:user_id', passport.authenticate('jwt', { session: false }),
+router.delete('/:post_id,:user_id', passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        controller.create_like(req, res);
+        controller.delete_like(req, res);
     });
 
 module.exports = router;

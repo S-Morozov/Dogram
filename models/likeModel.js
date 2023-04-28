@@ -25,6 +25,17 @@ const createLike = async ({ created_at, user_id, post_id }) => {
         throw new Error('SQL query failed');
     }
 };
+//Poistaa tykkäyksen
+const deleteLike = async ({ user_id, post_id }) => {
+    try {
+        const query = 'DELETE FROM likes WHERE user_id = ? AND post_id = ?';
+        const [result] = await pool.execute(query, [user_id, post_id]);
+        return { result };
+    } catch (error) {
+        console.error(error);
+        throw new Error('SQL query failed');
+    }
+};
 module.exports = {
-    createLike, getLike,
+    createLike, getLike, deleteLike,
 };

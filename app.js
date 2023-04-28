@@ -38,7 +38,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 // Serve example-ui
 app.use(express.static('example-ui'));
 // Serve uploaded image files
@@ -59,6 +58,5 @@ app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
 app.use('/post', passport.authenticate('jwt', { session: false }), postRouter);
 app.use('/like', passport.authenticate('jwt', { session: false }), likeRouter);
 app.use('/comment', passport.authenticate('jwt', { session: false }), commentRouter);
-
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

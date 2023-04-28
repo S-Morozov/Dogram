@@ -131,7 +131,7 @@ posts.forEach(async (post) => {
       console.error('Error adding comment:', error);
     }
   });
-  //Liken lisääminen
+  // Like adding and deleting
   const likePost = postArticle.querySelector('#likePost');
   likePost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
@@ -145,6 +145,7 @@ posts.forEach(async (post) => {
       });
       const like = await response.json();
       if (like.length === 0) {
+        // User has not liked the post, so add a new like
         try {
           const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
             method: 'POST',
@@ -161,12 +162,27 @@ posts.forEach(async (post) => {
           console.error('Error adding comment:', error);
         }
       } else {
-
+        // User has already liked the post, so delete their existing like
+        try {
+          const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+              'Content-Type': 'application/json'
+            }
+          });
+          if (response.ok) {
+            alert("Like removed!");
+          }
+        } catch (error) {
+          console.error('Error removing like:', error);
+        }
       }
     } catch (error) {
-      console.error('Error adding comment:', error);
+      console.error('Error checking like status:', error);
     }
   });
+
 });
 //Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {

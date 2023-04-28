@@ -26,4 +26,21 @@ const create_like = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-module.exports = { create_like, getUserLike };
+//Poistaa tykkäyksen
+const delete_like = async (req, res) => {
+    console.log(req.params);
+    const { post_id, user_id } = req.params;
+    const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    try {
+        const newLike = await postModel.deleteLike({
+            created_at,
+            user_id,
+            post_id
+        });
+        res.status(201).json(newLike);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+module.exports = { create_like, getUserLike, delete_like };
