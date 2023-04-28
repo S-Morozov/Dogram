@@ -55,11 +55,7 @@ const getCommentList = async (req, res) => {
 const getUserLike = async (req, res) => {
     try {
         const like = await postModel.getLike(req.params);
-        if (like.affectedRows > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        res.json(like);
     } catch (error) {
         res.status(500).send("Internal Server Error");
     }
@@ -120,8 +116,8 @@ const create_comment = async (req, res) => {
 };
 //Luo tykkäyksen
 const create_like = async (req, res) => {
-    const { user_id } = req.body;
-    const { id } = req.params;
+    console.log(req.params);
+    const { id,user_id } = req.params;
     const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
     try {
         const newLike = await postModel.createLike({

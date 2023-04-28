@@ -135,38 +135,34 @@ posts.forEach(async (post) => {
   //Liken lisääminen
   likePost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    const post_id = post.post_id;
     try {
-      const response = await fetch(url + `/post/like/${user_id, post_id}`, {
+      const response = await fetch(url + `/post/like/${user.user_id}/${post.post_id}`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
+        }
       });
       const like = await response.json();
       console.log(like);
+      if (like.isEmpty()) {
+        try {
+          const response = await fetch(url + `/post/like/${post_id}`, {
+            method: 'POST',
+            headers: {
+              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
+          });
+        } catch (error) {
+          console.error('Error adding comment:', error);
+        }
+      } else {
+      }
     } catch (error) {
       console.error('Error adding comment:', error);
     }
-    if (condition) {
-      try {
-        const response = await fetch(url + `/post/like/${post_id}`, {
-          method: 'POST',
-          headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
-        });
-      } catch (error) {
-        console.error('Error adding comment:', error);
-      }
-    } else {
-
-    }
-
   });
 });
 

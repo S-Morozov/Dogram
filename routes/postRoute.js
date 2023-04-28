@@ -23,7 +23,7 @@ router.get('/user/:id', passport.authenticate('jwt', { session: false }), contro
 router.get('/media/:id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
 
 //Hakee tietyn käyttäjän tykkäyksen, jos on
-router.get('/like/:user_id,:post_id', passport.authenticate('jwt', { session: false }), controller.getPostMedia);
+router.get('/like/:user_id/:post_id', passport.authenticate('jwt', { session: false }), controller.getUserLike);
 
 //Tekee uuden postauksen
 router.post('/:user_id', passport.authenticate('jwt', { session: false }),
@@ -58,7 +58,7 @@ router.post('/postComment/:id', passport.authenticate('jwt', { session: false })
   }
 );
 //Lisää tykkäyksen
-router.post('/like/:id', passport.authenticate('jwt', { session: false }),
+router.post('/like/:id,:id', passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
