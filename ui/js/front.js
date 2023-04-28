@@ -41,11 +41,14 @@ const posts = await response.json();
 const postListDiv = document.getElementById('postList');
 postListDiv.innerHTML = '';
 
+
 posts.forEach(async (post) => {
   const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
   const images = await response.json();
   const response2 = await fetch(url + `/comment/${post.post_id}`, fetchOptions);
   const comments = await response2.json();
+  const response3 = await fetch(url + `/like/${post.post_id}`, fetchOptions);
+  const likes = await response3.json();
   const postArticle = document.createElement('article');
   postArticle.setAttribute('class', 'post');
   postArticle.setAttribute('id', post.post_id);
@@ -72,14 +75,16 @@ posts.forEach(async (post) => {
     <p>${post.content}</p>
     <div>
     <form id="likePost">
-      <button type="submit" id="likeButton">Like</button>
-      </form>
-      <form id="comment-form">
-        <input type="text" id="comment-field" placeholder="Add a comment">
+    <button type="submit" id="likeButton">
+    <span id="likeCount${post.post_id}">${likes}</span> Likes
+    </button>
+    </form>
+      <form id="comment-form-${post.post_id}">
+        <input type="text" id="comment-field-${post.post_id}" placeholder="Add a comment">
         <button type="submit">Post comment</button>
       </form>
     </div>
-    <div id="comment-section">
+    <div id="comment-section-${post.post_id}">
       ${comments.map(comment => `
       <div class="comment">
         <div class="commenter">
@@ -100,11 +105,11 @@ posts.forEach(async (post) => {
       slides[i].style.display = "none";
     }
   });
-  //Lähettää kommentin
-  const commentForm = postArticle.querySelector('#comment-form');
+  // Lähettää kommentin
+  const commentForm = postArticle.querySelector(`#comment-form-${post.post_id}`);
+  const commentField = postArticle.querySelector(`#comment-field-${post.post_id}`);
   commentForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const commentField = document.getElementById('comment-field');
     const commentText = commentField.value;
     commentField.value = '';
     try {
@@ -116,7 +121,7 @@ posts.forEach(async (post) => {
         },
         body: JSON.stringify({ text: commentText, user_id: user.user_id })
       });
-      const commentSection = document.getElementById('comment-section');
+      const commentSection = document.getElementById(`comment-section-${post.post_id}`);
       const newComment = `
       <div class="comment">
         <div class="commenter">
@@ -131,8 +136,9 @@ posts.forEach(async (post) => {
       console.error('Error adding comment:', error);
     }
   });
-  // Like adding and deleting
+  //Lisää ja poistaa tykkäyksen
   const likePost = postArticle.querySelector('#likePost');
+  const likeCount = postArticle.querySelector(`#likeCount${post.post_id}`);
   likePost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     try {
@@ -145,7 +151,6 @@ posts.forEach(async (post) => {
       });
       const like = await response.json();
       if (like.length === 0) {
-        // User has not liked the post, so add a new like
         try {
           const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
             method: 'POST',
@@ -156,13 +161,13 @@ posts.forEach(async (post) => {
             body: JSON.stringify({ user_id: user.user_id, post_id: post.post_id })
           });
           if (response.ok) {
+            likeCount.textContent = parseInt(likeCount.textContent) + 1;
             alert("Like added!");
           }
         } catch (error) {
           console.error('Error adding comment:', error);
         }
       } else {
-        // User has already liked the post, so delete their existing like
         try {
           const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
             method: 'DELETE',
@@ -172,6 +177,7 @@ posts.forEach(async (post) => {
             }
           });
           if (response.ok) {
+            likeCount.textContent = parseInt(likeCount.textContent) - 1;
             alert("Like removed!");
           }
         } catch (error) {
@@ -182,7 +188,6 @@ posts.forEach(async (post) => {
       console.error('Error checking like status:', error);
     }
   });
-
 });
 //Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {

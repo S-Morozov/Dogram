@@ -16,14 +16,14 @@ const getCommentList = async (req, res) => {
 //Luo uuden kommentin
 const create_comment = async (req, res) => {
     const { text, user_id } = req.body;
-    const { id } = req.params;
+    const { post_id } = req.params;
     const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
     try {
         const newComment = await postModel.createComment({
             text,
             created_at,
             user_id,
-            post_id: id
+            post_id
         });
         res.status(201).json(newComment);
     } catch (error) {

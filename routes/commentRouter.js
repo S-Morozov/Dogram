@@ -5,13 +5,12 @@ const passport = require('passport');
 const router = express.Router();
 const controller = require('../controllers/commentController');
 const { body, validationResult } = require('express-validator');
-const uploadMiddleware = require('../utils/multer');
 
 //Hakee postauksen kommentit
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getCommentList);
 
 //Lisää kommentin
-router.post('/:id', passport.authenticate('jwt', { session: false }),
+router.post('/:post_id', passport.authenticate('jwt', { session: false }),
     body('text').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
     (req, res) => {
         const errors = validationResult(req);

@@ -13,6 +13,18 @@ const getLike = async (params) => {
         throw new Error('SQL query failed');
     }
 };
+//Hakee postauksen kaikki liket
+const getPostLikes = async (params) => {
+    const { user_id, post_id } = params;
+    try {
+        const query = "SELECT COUNT(*) AS like_count FROM likes WHERE post_id = ?";
+        const [result] = await pool.execute(query, [post_id]);
+        return result[0].like_count;
+    } catch (error) {
+        console.error(error);
+        throw new Error('SQL query failed');
+    }
+};
 //Luo tykkäyksen
 const createLike = async ({ created_at, user_id, post_id }) => {
     console.log(created_at, user_id, post_id);
@@ -37,5 +49,5 @@ const deleteLike = async ({ user_id, post_id }) => {
     }
 };
 module.exports = {
-    createLike, getLike, deleteLike,
+    createLike, getLike, deleteLike, getPostLikes,
 };

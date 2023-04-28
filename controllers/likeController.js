@@ -9,6 +9,20 @@ const getUserLike = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
+//Hakee postauksen tykkäysten määrän
+const getPostLikes = async (req, res) => {
+    console.log(req.params);
+    const { post_id } = req.params;
+    try {
+        const newLike = await postModel.getPostLikes({
+            post_id
+        });
+        res.status(201).json(newLike);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 //Luo tykkäyksen
 const create_like = async (req, res) => {
     console.log(req.params);
@@ -43,4 +57,4 @@ const delete_like = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-module.exports = { create_like, getUserLike, delete_like };
+module.exports = { create_like, getUserLike, delete_like, getPostLikes };

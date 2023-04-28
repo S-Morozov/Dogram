@@ -457,6 +457,14 @@ input:checked + .slide-container .nav label {
 .social-icon {
   margin: 20px 10px;
 }
+/* Postaus*/
+.post {
+  width: 30vw;
+  margin: auto;
+
+  border-style: solid;
+  border: red;
+}
 
 /* APPLYING MEDIA QUERIES */
 
@@ -615,7 +623,4 @@ input:checked + .slide-container .nav label {
   .container-fluid-down h3 {
     font-size: 1.5rem;
   }
-}
-svg {
-  height: 20px;
 }

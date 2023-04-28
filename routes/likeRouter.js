@@ -8,6 +8,8 @@ const controller = require('../controllers/likeController');
 
 //Hakee tietyn käyttäjän tykkäyksen, jos on
 router.get('/:user_id,:post_id', passport.authenticate('jwt', { session: false }), controller.getUserLike);
+//Hakee tietyn postauksen tykkäysten määrän
+router.get('/:post_id', passport.authenticate('jwt', { session: false }), controller.getPostLikes);
 //Lisää tykkäyksen
 router.post('/:post_id,:user_id', passport.authenticate('jwt', { session: false }),
     (req, res) => {
