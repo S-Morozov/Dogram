@@ -44,7 +44,7 @@ postListDiv.innerHTML = '';
 posts.forEach(async (post) => {
   const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
   const images = await response.json();
-  const response2 = await fetch(url + `/post/comments/${post.post_id}`, fetchOptions);
+  const response2 = await fetch(url + `/comment/${post.post_id}`, fetchOptions);
   const comments = await response2.json();
   const postArticle = document.createElement('article');
   postArticle.setAttribute('class', 'post');
@@ -108,7 +108,7 @@ posts.forEach(async (post) => {
     const commentText = commentField.value;
     commentField.value = '';
     try {
-      const response = await fetch(url + `/post/postComment/${post.post_id}`, {
+      const response = await fetch(url + `/comment/${post.post_id}`, {
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),

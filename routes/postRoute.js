@@ -7,8 +7,7 @@ const { body, validationResult } = require('express-validator');
 const controller = require('../controllers/postController');
 const uploadMiddleware = require('../utils/multer');
 
-//Hakee postauksen kommentit
-router.get('/comments/:id', passport.authenticate('jwt', { session: false }), controller.getCommentList);
+
 
 //Hakee kaikki postaukset
 router.get('/', passport.authenticate('jwt', { session: false }), controller.getPostList);
@@ -40,18 +39,6 @@ router.post('/:user_id', passport.authenticate('jwt', { session: false }),
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
     }
-  }
-);
-
-//Lisää kommentin
-router.post('/postComment/:id', passport.authenticate('jwt', { session: false }),
-  body('text').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    controller.create_comment(req, res);
   }
 );
 
