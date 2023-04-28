@@ -1,6 +1,7 @@
 'use strict';
 import { url } from '../../utils/url.js';
 const loginForm = document.querySelector('#login-form');
+
 loginForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const data = serializeJson(loginForm);
