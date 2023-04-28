@@ -3,22 +3,23 @@
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<!--  CSS-->
+        <!--  CSS-->
 
         <link rel="stylesheet" type='text/css' href="/css/stylesheets/styles.css">
 
-<!-- Google Fonts -->
+        <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
-        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Courgette&family=Delicious+Handrawn&display=swap"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Courgette&family=Delicious+Handrawn&display=swap"
+            rel="stylesheet">
 
-<!--  FONTAWESOME-->
+        <!--  FONTAWESOME-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <title>Front</title>
     </head>
@@ -27,72 +28,73 @@
         <section class="section-main" id="title">
             <div class="container-fluid">
 
-        <!-- Nav Bar -->
-        <nav class="navbar">
+                <!-- Nav Bar -->
+                <nav class="navbar">
 
-            <!-- LOGO -->
-            <a class="navbar-brand" href=""> <img class='logo-paw' src="/images/logo-paw-transparent.png"
-                alt="logo">Dogram</a>
-  
-            <!-- NAVIGATION MENU -->
-            <ul class="nav-links">
-  
-              <!-- USING CHECKBOX HACK -->
-              <input type="checkbox" id="checkbox_toggle" />
-              <label for="checkbox_toggle" class="hamburger">&#9776;</label>
-  
-              <!-- NAVIGATION MENUS -->
-              <div class="menu">
-  
-                <li><a href="/ui/front.html">Home</a></li>
-                <li><a href="/ui/profile-page.html">Profile</a></li>
-                <li><a href="/ui/registerDog.html">Register dog</a></li>
-              </div>
-            </ul>
-        </nav>
+                    <!-- LOGO -->
+                    <a class="navbar-brand" href=""> <img class='logo-paw' src="/images/logo-paw-transparent.png"
+                            alt="logo">Dogram</a>
 
-        <!-- Title -->
-        <div class="row-main">
-            <div class="col-lg-6">
-              <h1 class="big-heading-main">Tutustu uusiin ja mielenkiintoisiin koiriin lähelläsi.</h1>
-              <img class="title-image" src="/images/dogphone.png" alt="iphone-mockup">
+                    <!-- NAVIGATION MENU -->
+                    <ul class="nav-links">
+
+                        <!-- USING CHECKBOX HACK -->
+                        <input type="checkbox" id="checkbox_toggle" />
+                        <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+
+                        <!-- NAVIGATION MENUS -->
+                        <div class="menu">
+
+                            <li><a href="/ui/front.html">Home</a></li>
+                            <li><a href="/ui/profile-page.html">Profile</a></li>
+                            <li><a href="/ui/registerDog.html">Register dog</a></li>
+                            <li><a href="#" id="logout">Logout</a></li>
+                        </div>
+                    </ul>
+                </nav>
+
+                <!-- Title -->
+                <div class="row-main">
+                    <div class="col-lg-6">
+                        <h1 class="big-heading-main">Tutustu uusiin ja mielenkiintoisiin koiriin lähelläsi.</h1>
+                        <img class="title-image" src="/images/dogphone.png" alt="iphone-mockup">
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="white-section" id="features">
-        <div class="container-fluid">
-        <div class="formDiv">
-            <h3>Post</h3>
-            <form class="light-border" id="post-form" enctype="multipart/form-data">
-                <textarea class="light-border" name="content" placeholder="content" required minlength="3"
-                    pattern="[a-zA-Z0-9\s]{3,}">Name</textarea>
-                <select class="light-border" name="dog_id" required>
-                    <option value="">Select a dog</option>
-                </select>
-                <input class="light-border" type="file" name="file" multiple accept="image/*" placeholder="Choose file"
-                    required>
-                <button class="light-border" type="submit">Save</button>
-            </form>
-        </div>
-        </div>
-    </section>
+        <section class="white-section" id="features">
+            <div class="container-fluid">
+                <div class="formDiv">
+                    <h3>Post</h3>
+                    <form class="light-border" id="post-form" enctype="multipart/form-data">
+                        <textarea class="light-border" name="content" placeholder="content" required minlength="3"
+                            pattern="[a-zA-Z0-9\s]{3,}"></textarea>
+                        <select class="light-border" name="dog_id" required>
+                            <option value="">Select a dog</option>
+                        </select>
+                        <input class="light-border" type="file" name="file" multiple accept="image/jpeg,image/png"
+                            placeholder="Choose file" required>
+                        <button class="light-border" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </section>
         <section class="section-main" id="features">
-        <div id="postList"></div>
-        </div>
-        </div>
-</section>
+            <div id="postList"></div>
+            </div>
+            </div>
+        </section>
         <!-- Footer -->
         <footer class="white-section" id="footer">
             <div class="container-fluid">
-              <i class="social-icon fab fa-facebook-f"></i>
-              <i class="social-icon fab fa-twitter"></i>
-              <i class="social-icon fab fa-instagram"></i>
-              <i class="social-icon fas fa-envelope"></i>
-              <p>© Copyright 2023 Dogram</p>
+                <i class="social-icon fab fa-facebook-f"></i>
+                <i class="social-icon fab fa-twitter"></i>
+                <i class="social-icon fab fa-instagram"></i>
+                <i class="social-icon fas fa-envelope"></i>
+                <p>© Copyright 2023 Dogram</p>
             </div>
-          </footer>
+        </footer>
 
     </body>
     <script src="/utils/serialize.js"></script>

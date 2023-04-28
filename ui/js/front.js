@@ -131,12 +131,12 @@ posts.forEach(async (post) => {
       console.error('Error adding comment:', error);
     }
   });
-  const likePost = postArticle.querySelector('#likePost');
   //Liken lisääminen
+  const likePost = postArticle.querySelector('#likePost');
   likePost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     try {
-      const response = await fetch(url + `/post/like/${user.user_id}/${post.post_id}`, {
+      const response = await fetch(url + `/like/${user.user_id},${post.post_id}`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
@@ -144,28 +144,30 @@ posts.forEach(async (post) => {
         }
       });
       const like = await response.json();
-      console.log(like);
-      if (like.isEmpty()) {
+      if (like.length === 0) {
         try {
-          const response = await fetch(url + `/post/like/${post_id}`, {
+          const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
             method: 'POST',
             headers: {
               Authorization: 'Bearer ' + sessionStorage.getItem('token'),
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ user_id: user.user_id, post_id: post_id })
+            body: JSON.stringify({ user_id: user.user_id, post_id: post.post_id })
           });
+          if (response.ok) {
+            alert("Like added!");
+          }
         } catch (error) {
           console.error('Error adding comment:', error);
         }
       } else {
+
       }
     } catch (error) {
       console.error('Error adding comment:', error);
     }
   });
 });
-
 //Hakee kaikki käyttäjän koirat listaa varten
 const fetchUserDogs = async () => {
   try {

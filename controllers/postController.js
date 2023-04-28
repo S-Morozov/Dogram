@@ -51,15 +51,7 @@ const getCommentList = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-//Hakee käyttäjän tykkäyksen
-const getUserLike = async (req, res) => {
-    try {
-        const like = await postModel.getLike(req.params);
-        res.json(like);
-    } catch (error) {
-        res.status(500).send("Internal Server Error");
-    }
-};
+
 //Luo postauksen
 const create_post = async (req, res) => {
     const { content, dog_id } = req.body;
@@ -114,22 +106,6 @@ const create_comment = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-//Luo tykkäyksen
-const create_like = async (req, res) => {
-    console.log(req.params);
-    const { id,user_id } = req.params;
-    const created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    try {
-        const newLike = await postModel.createLike({
-            created_at,
-            user_id,
-            post_id: id
-        });
-        res.status(201).json(newLike);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
-};
 
-module.exports = { getPostList, getPost, create_post, getPostMedia, getUserPosts, create_comment, getCommentList, create_like, getUserLike };
+
+module.exports = { getPostList, getPost, create_post, getPostMedia, getUserPosts, create_comment, getCommentList };
