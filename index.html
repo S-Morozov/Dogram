@@ -10,6 +10,7 @@
     <!--  CSS-->
 
     <link rel="stylesheet" type='text/css' href="/css/stylesheets/styles.css">
+    <link rel="stylesheet" type='text/css' href="/ui/css/login.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
@@ -53,7 +54,38 @@
           </ul>
         </nav>
 
-
+        <div class="modal">
+          <div class="modal-content">
+            <div class="l-part">
+              <div>
+                <div class="header">
+                  <img src="/images/logo-paw-transparent.png" alt="image" />
+                </div>
+                <h3>Login</h3>
+                <form id="login-form">
+                  <input type="text" name="username" placeholder="Username" class="input-1" required />
+                  <div class="overlap-text">
+                    <input type="password" name="password" placeholder="Password" class="input-2" required />
+                    <a href="#">Forgot?</a>
+                  </div>
+                  <button type="submit" value="submit" class="btn">Login</button>
+                </form>
+                <h3>Register</h3>
+                <form id="add-user-form" enctype="multipart/form-data">
+                  <input type="text" name="username" pattern=".{3,}" placeholder="Username" class="input-1" required>
+                  <input type="email" name="email" placeholder="Email" class="input-1">
+                  <input type="password" name="password" placeholder="Password" class="input-1">
+                  <input type="file" name="file" accept="image/*" class="light-border" placeholder="Choose file">
+                  <input type="text" name="bio" placeholder="Bio" class="input-1">
+                  <input type="text" name="location" placeholder="Location" class="input-1">
+                  <input type="url" name="website" placeholder="Website" class="input-1">
+                  <button type="submit" class="btn">Register</button>
+                  <button id="close-modal-btn" class="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Title -->
 
         <div class="row-main">
@@ -61,14 +93,11 @@
             <h1 class="big-heading-main">Tutustu uusiin ja mielenkiintoisiin koiriin lähelläsi.</h1>
             <img class="title-image" src="images/dogphone.png" alt="iphone-mockup">
             <div class="buttons-main">
-              <button class="button-sign-up" onclick="window.location.href='/ui/register.html'">Sign up</button>
-              <button class="button-login" onclick="window.location.href='/ui/login.html'">Login</button>
+              <button class="button-sign-up" id="open-modal-btn">Login/register</button>
             </div>
           </div>
         </div>
-
       </div>
-
     </section>
 
 
@@ -256,9 +285,8 @@
         <p>© Copyright 2023 Dogram</p>
       </div>
     </footer>
-
-    <script src="app.js" type="module"></script>
-
+    <script src="/ui/js/login.js" type="module"></script>
+    <script src="/utils/serialize.js"></script>
   </body>
 
-</html>
+</html>;

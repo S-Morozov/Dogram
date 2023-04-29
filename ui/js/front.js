@@ -1,6 +1,17 @@
 'use strict';
 const logout = document.querySelector("#logout");
 import { url } from '../../utils/url.js';
+var openModalBtn = document.getElementById("open-modal-btn");
+var modal = document.querySelector(".modal");
+var closeModalBtn = document.querySelector("#close-modal-btn");
+
+openModalBtn.addEventListener("click", function () {
+  modal.classList.add("show-modal");
+});
+
+closeModalBtn.addEventListener("click", function () {
+  modal.classList.remove("show-modal");
+});
 
 const getUserinfo = async () => {
   const sessionToken = sessionStorage.getItem('user');
@@ -17,6 +28,25 @@ const fetchOptions = {
     Authorization: 'Bearer ' + sessionStorage.getItem('token'),
   },
 };
+//Registeröi koiran
+const addDogForm = document.querySelector("#add-dog-form");
+addDogForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const fd = new FormData(addDogForm);
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+    body: fd,
+  };
+  const response = await fetch(url + '/dog', fetchOptions);
+  if (response.ok) {
+    const json = await response.json();
+    console.log('add response', json);
+    location.href = 'front.html';
+  }
+});
 //Logout
 logout.addEventListener("click", (evt) => {
   (async () => {

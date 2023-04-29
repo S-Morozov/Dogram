@@ -10,6 +10,8 @@
         <!--  CSS-->
 
         <link rel="stylesheet" type='text/css' href="/css/stylesheets/styles.css">
+        <link rel="stylesheet" type='text/css' href="/ui/css/login.css">
+
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
@@ -44,10 +46,9 @@
 
                         <!-- NAVIGATION MENUS -->
                         <div class="menu">
-
                             <li><a href="/ui/front.html">Home</a></li>
                             <li><a href="/ui/profile-page.html">Profile</a></li>
-                            <li><a href="/ui/registerDog.html">Register dog</a></li>
+                            <li><a href="#" id="open-modal-btn">Register dog</a></li>
                             <li><a href="#" id="logout">Logout</a></li>
                         </div>
                     </ul>
@@ -62,7 +63,6 @@
                 </div>
             </div>
         </section>
-
         <section class="white-section" id="features">
             <div class="container-fluid">
                 <div class="formDiv">
@@ -80,6 +80,33 @@
                 </div>
             </div>
         </section>
+        <div class="modal">
+            <div class="modal-content">
+                <div class="l-part">
+                    <div>
+                        <div class="header">
+                            <img src="/images/logo-paw-transparent.png" alt="image" />
+                        </div>
+                        <h3>Register dog</h3>
+                        <form class="input-1" id="add-dog-form">
+                            <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
+                            <input class="input-1" type="text" name="breed" placeholder="breed" required>
+                            <input class="input-1" type="number" name="age" placeholder="age" required>
+                            <input type="radio" id="html" name="gender" value="Male" required>
+                            <label for="Male">Male</label>
+                            <input type="radio" id="css" name="gender" value="Female" required>
+                            <label for="Female">Female</label>
+                            <input class="input-1" type="text" name="color" placeholder="color" required>
+                            <textarea class="input-1" name="bio" placeholder="Bio"></textarea>
+                            <input class="light-border" type="file" name="file" accept="image/*"
+                                placeholder="Choose file" required>
+                            <button type="submit" class="btn">Register</button>
+                            <button id="close-modal-btn" class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="section-main" id="features">
             <div id="postList"></div>
             </div>
@@ -95,7 +122,6 @@
                 <p>© Copyright 2023 Dogram</p>
             </div>
         </footer>
-
     </body>
     <script src="/utils/serialize.js"></script>
     <script type="module" src="js/front.js"></script>
