@@ -81,34 +81,6 @@
                 </div>
             </div>
         </section>
-        <div class="modal">
-            <div class="modal-content">
-                <div class="l-part">
-                    <div>
-                        <div class="header">
-                            <img src="/images/logo-paw-transparent.png" alt="image" />
-                        </div>
-                        <h3>Register dog</h3>
-                        <form class="input-1" id="add-dog-form">
-                            <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
-                            <input class="input-1" type="text" name="breed" placeholder="breed" required>
-                            <input class="input-1" type="number" name="age" placeholder="age" required>
-                            <input type="radio" id="html" name="gender" value="Male" required>
-                            <label for="Male">Male</label>
-                            <input type="radio" id="css" name="gender" value="Female" required>
-                            <label for="Female">Female</label>
-                            <input class="input-1" type="text" name="color" placeholder="color" required>
-                            <textarea class="input-1" name="bio" placeholder="Bio"></textarea>
-                            <input class="light-border" type="file" name="file" accept="image/*"
-                                placeholder="Choose file" required>
-                            <button type="submit" class="btn">Register</button>
-                        </form>
-                        <button id="close-modal-btn" class="btn">Close</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
         <section class="section-main" id="features">
             <div id="postList"></div>
             </div>
@@ -125,6 +97,34 @@
             </div>
         </footer>
     </body>
+    <div class="modal">
+        <div class="modal-content">
+            <div class="l-part">
+                <div>
+                    <div class="header">
+                        <img src="/images/logo-paw-transparent.png" alt="image" />
+                    </div>
+                    <h3>Register dog</h3>
+                    <form class="input-1" id="add-dog-form">
+                        <input class="input-1" type="text" name="name" pattern=".{3,}" placeholder="Name" required>
+                        <input class="input-1" type="text" name="breed" placeholder="breed" required>
+                        <input class="input-1" type="number" name="age" placeholder="age" required>
+                        <input type="radio" id="html" name="gender" value="Male" required>
+                        <label for="Male">Male</label>
+                        <input type="radio" id="css" name="gender" value="Female" required>
+                        <label for="Female">Female</label>
+                        <input class="input-1" type="text" name="color" placeholder="color" required>
+                        <textarea class="input-1" name="bio" placeholder="Bio"></textarea>
+                        <input class="light-border" type="file" name="file" accept="image/*" placeholder="Choose file"
+                            required>
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                    <button id="close-modal-btn" class="btn">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/utils/serialize.js"></script>
     <script type="module" src="js/front.js"></script>
     <script type="module" src="js/check-login.js"></script>

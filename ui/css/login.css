@@ -72,8 +72,8 @@ body {
   font-weight: bold;
   cursor: pointer;
   border-radius: 3px;
+  margin: 0 auto; /* center horizontally */
 }
-
 .sub-content {
   width: 250px;
   height: 40%;
@@ -104,25 +104,6 @@ body {
 input:focus,
 button:focus {
   background-color: yellow;
-}
-
-/* youtube link */
-.youtube {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 160px;
-  text-align: center;
-  padding: 15px 10px;
-  background: #bb0000;
-  border-radius: 5px;
-}
-
-.youtube a {
-  text-decoration: none;
-  color: #fff;
-  text-transform: capitalize;
-  letter-spacing: 1px;
 }
 
 h3 {
