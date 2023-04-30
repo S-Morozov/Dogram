@@ -12,14 +12,29 @@ openModalBtn.addEventListener("click", function () {
 closeModalBtn.addEventListener("click", function () {
   modal.classList.remove("show-modal");
 });
+const formInputs = modal.querySelectorAll('input, textarea');
 
+// add "required" back to form inputs when modal is opened
+modal.addEventListener('click', function (event) {
+  if (event.target.id === 'close-modal-btn' || event.target.classList.contains('modal')) {
+    // add "required" attribute to all form inputs
+    formInputs.forEach(input => {
+      input.setAttribute('required', '');
+    });
+    // remove "required" attribute from all form inputs
+    formInputs.forEach(input => {
+      input.removeAttribute('required');
+    });
+  }
+});
+//Hakee käyttäjän tiedot tokenista
 const getUserinfo = async () => {
   const sessionToken = sessionStorage.getItem('user');
   const user = JSON.parse(sessionToken);
   return user;
 };
 
-// Call the function to get the user ID
+
 var user = await getUserinfo();
 const postForm = document.querySelector('#post-form');
 const dropdown = document.querySelector('select[name="dog_id"]');
@@ -58,7 +73,7 @@ logout.addEventListener("click", (evt) => {
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('user');
       alert('You have logged out');
-      location.href = 'login.html';
+      location.href = '../index.html';
     } catch (e) {
       console.log(e.message);
     }
@@ -80,7 +95,7 @@ posts.forEach(async (post) => {
   const response3 = await fetch(url + `/like/${post.post_id}`, fetchOptions);
   const likes = await response3.json();
   const postArticle = document.createElement('article');
-  postArticle.setAttribute('class', 'post');
+  postArticle.setAttribute('class', 'post fade-in');
   postArticle.setAttribute('id', post.post_id);
   postArticle.innerHTML = `
   <h2 style="display: none;">Postaus</h2>
@@ -260,3 +275,4 @@ postForm.addEventListener('submit', async (evt) => {
     console.error('Failed to create post');
   }
 });
+
