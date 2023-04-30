@@ -60,7 +60,7 @@ loginForm.addEventListener('submit', async (evt) => {
     };
     const response = await fetch(url + '/user/token', fetchOptions);
     if (!response.ok) {
-      location.href = 'login.html';
+      location.href = '../index.html';
     } else {
       const json = await response.json();
       sessionStorage.setItem('user', JSON.stringify(json.user));

@@ -3,7 +3,7 @@ import { url } from '../../utils/url.js';
 (async () => {
   // check sessionStorage
   if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
-    location.href = 'login.html';
+    location.href = '../index.html';
     return;
   }
   // check if token valid
@@ -15,7 +15,7 @@ import { url } from '../../utils/url.js';
     };
     const response = await fetch(url + '/user/token', fetchOptions);
     if (!response.ok) {
-      location.href = 'login.html';
+      location.href = '../index.html';
     } else {
       const json = await response.json();
       const user = {
