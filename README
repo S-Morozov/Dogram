@@ -1,0 +1,4 @@
+1. clone the repo 
+2. run npm install
+3. create .env
+4. run npm start

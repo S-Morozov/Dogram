@@ -310,6 +310,25 @@ img {
   }
 }
 
+/* NAVBAR MENU */
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+}
+
+.menu li {
+  padding: 5px 14px;
+}
+
+.menu a:hover {
+  color: #1d3557;
+}
+
+/* DROPDOWN MENU */
+.services {
+  position: relative;
+}
 /*
 
 The following code will only run if your browser supports CSS grid.
