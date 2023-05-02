@@ -2,33 +2,50 @@ import { url } from '../../utils/url.js';
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
+//Logout
+logout.addEventListener("click", (evt) => {
+  (async () => {
+    try {
+      const response = await fetch(url + '/auth/logout');
+      const json = await response.json();
+      console.log(json);
+      // remove token
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      alert('You have logged out');
+      location.href = '../index.html';
+    } catch (e) {
+      console.log(e.message);
+    }
+  })();
+});
 //Hakee käyttäjän tiedot tokenista
 const getUserinfo = async () => {
-    const sessionToken = sessionStorage.getItem('user');
-    const user = JSON.parse(sessionToken);
-    return user;
+  const sessionToken = sessionStorage.getItem('user');
+  const user = JSON.parse(sessionToken);
+  return user;
 };
 var user = await getUserinfo();
 console.log(user);
 
 const galleryContainer = document.querySelector('.gallery');
 const fetchOptions = {
-    headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-    }
+  headers: {
+    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+  }
 };
 //Haetaan käyttäjän postaamat kuvat
 const response = await fetch(url + '/post/user/' + id, fetchOptions);
 const galleryItems = await response.json();
 galleryItems.forEach(async (post) => {
-    const response2 = await fetch(url + `/comment/${post.post_id}`, fetchOptions);
-    const comments = await response2.json();
-    const response3 = await fetch(url + `/like/${post.post_id}`, fetchOptions);
-    const likes = await response3.json();
-    const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
-    const images = await response.json();
-    console.log(images);
-    const html = images.map(image => `
+  const response2 = await fetch(url + `/comment/${post.post_id}`, fetchOptions);
+  const comments = await response2.json();
+  const response3 = await fetch(url + `/like/${post.post_id}`, fetchOptions);
+  const likes = await response3.json();
+  const response = await fetch(url + `/post/media/${post.post_id}`, fetchOptions);
+  const images = await response.json();
+  console.log(images);
+  const html = images.map(image => `
         <div class="gallery-item" tabindex="0">
             <img src="../../uploads/${image.media_name}" class="gallery-image" alt="${image.media_name}">
             <div class="gallery-item-info">
@@ -39,7 +56,7 @@ galleryItems.forEach(async (post) => {
             </div>
         </div>
     `).join('');
-    galleryContainer.innerHTML += html;
+  galleryContainer.innerHTML += html;
 });
 
 const container = document.querySelector('.container');
