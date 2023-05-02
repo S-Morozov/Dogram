@@ -570,9 +570,19 @@ input:checked + .slide-container .nav label {
 
 #postList{
   background-image: url('/images/dog-with-volleyball-copyspace.jpg');
-  background-size: cover; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: center;
 }
+
+
+#content .text, p{
+  font-size: 2rem;
+  color: white;
+}
+
+
 
 
 /* APPLYING MEDIA QUERIES */
