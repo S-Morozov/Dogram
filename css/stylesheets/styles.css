@@ -492,6 +492,89 @@ input:checked + .slide-container .nav label {
 .prev,.next {
   cursor: pointer;
 }
+
+
+.formDiv {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.formDiv h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.light-border {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.light-border:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px 0 rgba(102,175,233,0.6);
+}
+
+.light-border option {
+  font-size: 16px;
+}
+
+.light-border[type="file"] {
+  padding: 0;
+}
+
+.light-border[type="file"]::before {
+  content: "Choose file";
+  display: inline-block;
+  padding: 10px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.light-border[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.light-border[type="file"]::-moz-file-upload-button {
+  visibility: hidden;
+}
+
+.light-border[type="file"]:focus::before {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 8px 0 rgba(102,175,233,0.6);
+}
+
+.light-border[type="file"]:hover::before {
+  background-color: #f0f0f0;
+}
+
+.light-border[type="file"]:active::before {
+  background-color: #e6e6e6;
+}
+
+#postList{
+  background-image: url('/images/dog-with-volleyball-copyspace.jpg');
+  background-size: cover; 
+  background-position: center;
+}
+
+
 /* APPLYING MEDIA QUERIES */
 
 /*// Extra large devices (large desktops, 1200px and up)*/
