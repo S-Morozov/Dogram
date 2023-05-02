@@ -11,7 +11,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 
 //Lisää kommentin
 router.post('/:post_id', passport.authenticate('jwt', { session: false }),
-    body('text').isAlpha().isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
+    body('text').isLength({ min: 2 }).withMessage('Content must be at least 2 characters').trim().escape(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

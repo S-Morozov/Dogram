@@ -489,7 +489,9 @@ input:checked + .slide-container .nav label {
 .show-modal {
   display: block;
 }
-
+.prev,.next {
+  cursor: pointer;
+}
 /* APPLYING MEDIA QUERIES */
 
 /*// Extra large devices (large desktops, 1200px and up)*/

@@ -108,8 +108,8 @@ posts.forEach(async (post) => {
           <div class="text">${image.media_name}</div>
         </div>
       `).join('')}
-      <a class="prev" onclick="plusSlides(-1, ${post.post_id})">❮</a>
-      <a class="next" onclick="plusSlides(1, ${post.post_id})">❯</a>
+      <a class="prev" onclick="plusSlides(-1, ${post.post_id})">⬅️</a>
+      <a class="next" onclick="plusSlides(1, ${post.post_id})">➡️</a>
     </div>
     <br>
     <div style="text-align:center">
@@ -125,7 +125,7 @@ posts.forEach(async (post) => {
     </button>
     </form>
       <form id="comment-form-${post.post_id}">
-        <input type="text" id="comment-field-${post.post_id}" placeholder="Add a comment">
+        <input type="text" id="comment-field-${post.post_id}" placeholder="Add a comment" required>
         <button type="submit">Post comment</button>
       </form>
     </div>
@@ -166,7 +166,8 @@ posts.forEach(async (post) => {
         },
         body: JSON.stringify({ text: commentText, user_id: user.user_id })
       });
-      const commentSection = document.getElementById(`comment-section-${post.post_id}`);
+      if (response.ok) {
+        const commentSection = document.getElementById(`comment-section-${post.post_id}`);
       const newComment = `
       <div class="comment">
         <div class="commenter">
@@ -177,6 +178,7 @@ posts.forEach(async (post) => {
       </div>
     `;
       commentSection.insertAdjacentHTML('beforeend', newComment);
+      }
     } catch (error) {
       console.error('Error adding comment:', error);
     }
