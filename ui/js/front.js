@@ -124,7 +124,7 @@ posts.forEach(async (post) => {
         <span class="dot" onclick="currentSlide(${index + 1}, ${post.post_id})"></span>
       `).join('')}
     </div>
-    <p>${post.content}</p>
+    <p id="postText">${post.content}</p>
     <div>
     <form id="likePost">
     <button type="submit" id="likeButton">
@@ -141,7 +141,7 @@ posts.forEach(async (post) => {
       <div class="comment">
         <div class="commenter">
           <img src= "/../thumbnails/${comment.profile_image}">
-          <p>${comment.username}</p>
+          <p><a href="./profile-page.html?id=${comment.user_id}">${comment.username}</a></p>
         </div>
         <p class="comment-text">${comment.content}</p>
       </div>

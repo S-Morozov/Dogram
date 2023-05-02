@@ -489,10 +489,10 @@ input:checked + .slide-container .nav label {
 .show-modal {
   display: block;
 }
-.prev,.next {
+.prev,
+.next {
   cursor: pointer;
 }
-
 
 .formDiv {
   margin: 20px auto;
@@ -524,7 +524,7 @@ input:checked + .slide-container .nav label {
 .light-border:focus {
   outline: none;
   border-color: #66afe9;
-  box-shadow: 0 0 8px 0 rgba(102,175,233,0.6);
+  box-shadow: 0 0 8px 0 rgba(102, 175, 233, 0.6);
 }
 
 .light-border option {
@@ -557,7 +557,7 @@ input:checked + .slide-container .nav label {
 .light-border[type="file"]:focus::before {
   outline: none;
   border-color: #66afe9;
-  box-shadow: 0 0 8px 0 rgba(102,175,233,0.6);
+  box-shadow: 0 0 8px 0 rgba(102, 175, 233, 0.6);
 }
 
 .light-border[type="file"]:hover::before {
@@ -568,22 +568,19 @@ input:checked + .slide-container .nav label {
   background-color: #e6e6e6;
 }
 
-#postList{
-  background-image: url('/images/dog-with-volleyball-copyspace.jpg');
+#postList {
+  background-image: url("/images/dog-with-volleyball-copyspace.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
 }
 
-
-#content .text, p{
+#content .text,
+p {
   font-size: 2rem;
-  color: white;
+  color: rgb(5, 5, 5);
 }
-
-
-
 
 /* APPLYING MEDIA QUERIES */
 
@@ -620,7 +617,6 @@ input:checked + .slide-container .nav label {
     width: 250px;
   }
 
-
   .modal {
     display: none;
     position: fixed;
@@ -632,7 +628,7 @@ input:checked + .slide-container .nav label {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  
+
   .modal-content {
     background-color: #fefefe;
     margin: 10% auto;
@@ -640,13 +636,10 @@ input:checked + .slide-container .nav label {
     border: 1px solid #888;
     width: 30%;
   }
-  
+
   .show-modal {
     display: block;
   }
-
-
-
 }
 
 /*// Medium devices (tablets, 768px and up)*/
@@ -732,7 +725,7 @@ input:checked + .slide-container .nav label {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  
+
   .modal-content {
     background-color: #fefefe;
     margin: 10% auto;
@@ -740,15 +733,10 @@ input:checked + .slide-container .nav label {
     border: 1px solid #888;
     width: 40%;
   }
-  
+
   .show-modal {
     display: block;
   }
-
-
-
-
-
 }
 
 /*// Small devices (landscape phones, 576px and up)*/
@@ -811,7 +799,7 @@ input:checked + .slide-container .nav label {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  
+
   .modal-content {
     background-color: #fefefe;
     margin: 10% auto;
@@ -819,11 +807,8 @@ input:checked + .slide-container .nav label {
     border: 1px solid #888;
     width: 60%;
   }
-  
+
   .show-modal {
     display: block;
   }
-
-
-
 }

@@ -100,12 +100,22 @@ body {
   letter-spacing: -2px;
   font-weight: normal;
 }
-
+button {
+  border-radius: 4px;
+  background-color: #fafafa;
+  color: rgb(3, 0, 0);
+  margin-bottom: 15px;
+  height: 40px;
+  width: 80px;
+  font-weight: bold;
+}
 input:focus,
-button:focus {
+button:hover {
   background-color: yellow;
 }
-
+input[type="text"] {
+  height: 30px;
+}
 h3 {
   font-family: "Overpass Mono", monospace;
   word-spacing: -3px;
@@ -165,5 +175,8 @@ h3 {
   background-color: #ff4c68;
 }
 #content {
-  background-color: grey;
+  background-color: #fc6d2b;
+}
+.commenter a {
+  text-decoration: none;
 }
