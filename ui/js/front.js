@@ -2,40 +2,45 @@
 const logout = document.querySelector("#logout");
 import { url } from '../../utils/url.js';
 var openModalBtn = document.getElementById("open-modal-btn");
+var openProfile = document.getElementById("open-profile");
 var modal = document.querySelector(".modal");
 var closeModalBtn = document.querySelector("#close-modal-btn");
 
-openModalBtn.addEventListener("click", function () {
+
+openModalBtn.addEventListener("click", () => {
   modal.classList.add("show-modal");
 });
 
-closeModalBtn.addEventListener("click", function () {
+closeModalBtn.addEventListener("click", () => {
   modal.classList.remove("show-modal");
 });
 const formInputs = modal.querySelectorAll('input, textarea');
 
-// add "required" back to form inputs when modal is opened
-modal.addEventListener('click', function (event) {
+openProfile.addEventListener("click", () => {
+  window.location.href = `./profile-page.html?id=${user.user_id}`;
+});
+
+
+//Poistaa ja lisää required kentiiin (Oli random error chromessa aina ko sulki modalin)
+modal.addEventListener('click', (event) => {
   if (event.target.id === 'close-modal-btn' || event.target.classList.contains('modal')) {
-    // add "required" attribute to all form inputs
     formInputs.forEach(input => {
       input.setAttribute('required', '');
     });
-    // remove "required" attribute from all form inputs
     formInputs.forEach(input => {
       input.removeAttribute('required');
     });
   }
 });
+
 //Hakee käyttäjän tiedot tokenista
 const getUserinfo = async () => {
   const sessionToken = sessionStorage.getItem('user');
   const user = JSON.parse(sessionToken);
   return user;
 };
-
-
 var user = await getUserinfo();
+
 const postForm = document.querySelector('#post-form');
 const dropdown = document.querySelector('select[name="dog_id"]');
 const fetchOptions = {
@@ -43,6 +48,7 @@ const fetchOptions = {
     Authorization: 'Bearer ' + sessionStorage.getItem('token'),
   },
 };
+
 //Registeröi koiran
 const addDogForm = document.querySelector("#add-dog-form");
 addDogForm.addEventListener('submit', async (evt) => {
@@ -62,6 +68,7 @@ addDogForm.addEventListener('submit', async (evt) => {
     location.href = 'front.html';
   }
 });
+
 //Logout
 logout.addEventListener("click", (evt) => {
   (async () => {
@@ -168,7 +175,7 @@ posts.forEach(async (post) => {
       });
       if (response.ok) {
         const commentSection = document.getElementById(`comment-section-${post.post_id}`);
-      const newComment = `
+        const newComment = `
       <div class="comment">
         <div class="commenter">
           <img src="/../thumbnails/${user.profile_image}">
@@ -177,7 +184,7 @@ posts.forEach(async (post) => {
         <p class="comment-text">${commentText}</p>
       </div>
     `;
-      commentSection.insertAdjacentHTML('beforeend', newComment);
+        commentSection.insertAdjacentHTML('beforeend', newComment);
       }
     } catch (error) {
       console.error('Error adding comment:', error);
@@ -256,7 +263,7 @@ const fetchUserDogs = async () => {
 
 fetchUserDogs();
 
-// Create a new post and fetch all posts
+// Luo uuden postauksen
 postForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = new FormData(postForm);
@@ -277,4 +284,3 @@ postForm.addEventListener('submit', async (evt) => {
     console.error('Failed to create post');
   }
 });
-

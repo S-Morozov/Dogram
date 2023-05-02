@@ -1,5 +1,19 @@
-const galleryContainer = document.querySelector('.gallery-container');
+import { url } from '../../utils/url.js';
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+console.log("Id on :", id);
+const galleryContainer = document.querySelector('.gallery');
 
+const fetchOptions = {
+    headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    }
+};
+const response = await fetch(url + '/post/' + id, fetchOptions);
+const posts = await response.json();
+if (posts.length > 0) {
+    console.log("Yeah boy");
+}
 const galleryHTML = galleryItems.map(item => `
     <div class="gallery-item" tabindex="0">
         <img src="${item.imageUrl}" class="gallery-image" alt="${item.imageAlt}">
