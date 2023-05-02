@@ -526,6 +526,34 @@ input:checked + .slide-container .nav label {
   .card {
     width: 250px;
   }
+
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+  }
+  
+  .show-modal {
+    display: block;
+  }
+
+
+
 }
 
 /*// Medium devices (tablets, 768px and up)*/
@@ -599,6 +627,35 @@ input:checked + .slide-container .nav label {
     flex-direction: column;
     align-items: center;
   }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+  }
+  
+  .show-modal {
+    display: block;
+  }
+
+
+
+
+
 }
 
 /*// Small devices (landscape phones, 576px and up)*/
@@ -649,4 +706,31 @@ input:checked + .slide-container .nav label {
   .container-fluid-down h3 {
     font-size: 1.5rem;
   }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+  }
+  
+  .show-modal {
+    display: block;
+  }
+
+
+
 }
