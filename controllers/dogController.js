@@ -25,7 +25,6 @@ const getdogs = async (req, res) => {
 //Hakee koiran
 const getdog = async (req, res) => {
     //console.log(req.params);
-    // convert id value to number
     const dogId = Number(req.params.id);
     // check if number is not an integer
     if (!Number.isInteger(dogId)) {

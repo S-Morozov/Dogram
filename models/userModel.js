@@ -1,6 +1,6 @@
 'use strict';
 const pool = require('../database/db');
-
+//Hakee kaikki käyttäjät
 const getAllUsers = async () => {
   try {
     const [users] = await pool.query(`SELECT user_id, name, email FROM users`);
@@ -9,7 +9,7 @@ const getAllUsers = async () => {
     console.error("error", e.message);
   }
 };
-
+//Hakee tietyn käyttäjän
 const getUser = async (id) => {
   try {
     const [user] = await pool.query('SELECT user_id, username, email, profile_image, bio FROM users WHERE user_id = ?', [id]);
@@ -19,6 +19,7 @@ const getUser = async (id) => {
     return;
   }
 };
+//Lisää käyttäjän
 const addUser = async (user) => {
   console.log("Käyttäjä on : ", user);
   try {

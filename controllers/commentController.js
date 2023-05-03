@@ -1,6 +1,4 @@
 'use strict';
-const { validationResult } = require('express-validator');
-const { makeThumbnail } = require('../utils/image');
 // postController
 const postModel = require('../models/commentModel');
 
