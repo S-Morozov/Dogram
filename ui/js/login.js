@@ -81,10 +81,11 @@ if (token && user) {
   document.getElementById("logout").style.display = "block";
   document.getElementById("open-modal-btn").style.display = "none";
 } else {
-  // hide the logout menu item
+  //Piilottaa logout jos ei ole logged in
   document.getElementById("logout").style.display = "none";
   document.getElementById("open-modal-btn").style.display = "block";
 }
+//Submittaa koiran lisäämis formin
 const addDogForm = document.querySelector("#add-dog-form");
 addDogForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();

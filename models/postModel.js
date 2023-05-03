@@ -23,6 +23,7 @@ const getPost = async (id) => {
         return null;
     }
 };
+//Hakee käyttäjän kaikki postaukset
 const getUserPosts = async (id) => {
     console.log(id);
     try {

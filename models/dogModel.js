@@ -13,7 +13,7 @@ const getAllDogs = async () => {
   }
 };
 
-
+//Hakee tietyn koiran
 const getDog = async (id) => {
   try {
     const [dog] = await pool.query('SELECT * FROM dogs WHERE dog_id = ?', [id]);
@@ -23,7 +23,7 @@ const getDog = async (id) => {
     return null;
   }
 };
-
+//Hakee käyttäjän kaikki koirat
 const getUserDogs = async (id) => {
   try {
 
@@ -34,6 +34,7 @@ const getUserDogs = async (id) => {
     return null;
   }
 };
+//Lisää koiran
 const addDog = async (dog) => {
   console.log("Adding dog: ", dog);
   try {
@@ -54,7 +55,7 @@ const addDog = async (dog) => {
     return;
   }
 };
-
+//Päivittää koiran tiedot
 const updateDog = async (dog, dogId, user) => {
   let sql;
   const values = [
@@ -82,7 +83,7 @@ const updateDog = async (dog, dogId, user) => {
     throw new Error('sql update dog failed');
   }
 };
-
+//Poistaa koiran
 const deleteDog = async (id, userId, userRole) => {
   let sql;
   if (userRole === 0) {

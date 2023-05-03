@@ -13,24 +13,6 @@ require('./utils/passport');
 
 const app = express();
 const port = 3000;
-//Ehkä turha
-app.use(express.static('public', {
-    setHeaders: (res, path) => {
-        if (path.endsWith('.js')) {
-            res.setHeader('Content-Type', 'application/javascript');
-        } else if (path.endsWith('.css')) {
-            res.setHeader('Content-Type', 'text/css');
-        }
-    }
-}));
-
-// Load main page when node.js start
-app.use("/", express.static("css"));
-app.use('/images', express.static('images'));
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-
-});
 
 // Log middleware
 app.use((req, res, next) => {

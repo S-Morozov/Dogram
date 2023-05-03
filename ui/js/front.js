@@ -204,6 +204,7 @@ posts.forEach(async (post) => {
         }
       });
       const like = await response.json();
+      //Jos ei ole tykäänny jo postauksesta
       if (like.length === 0) {
         try {
           const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {
@@ -221,6 +222,7 @@ posts.forEach(async (post) => {
         } catch (error) {
           console.error('Error adding comment:', error);
         }
+        //Jos on tykänny jo postauksesta poistetaan tykkäys
       } else {
         try {
           const response = await fetch(url + `/like/${post.post_id},${user.user_id}`, {

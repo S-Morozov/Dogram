@@ -1,6 +1,6 @@
 'use strict';
 const pool = require('../database/db');
-
+//Hakee kaikki kommentit
 const getComments = async (post_id) => {
     try {
         const query = 'SELECT comments.*, users.username, users.profile_image FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE comments.post_id = ?';
